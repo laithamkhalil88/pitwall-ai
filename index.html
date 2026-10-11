@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16052d">
+<title>PITWALL AI | Race Engineer</title>
+<style>
+:root {
+  --bg:#10071c; --panel:#1c102a; --panel2:#251735;
+  --purple:#22015b; --yellow:#cef409; --muted:#a69bb7;
+  --border:#382747; --white:#f7f4fc;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--white);
+  font-family:Arial,Helvetica,sans-serif; min-height:100vh;
+}
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
+  outline:2px solid var(--yellow); outline-offset:2px;
+}
+button:disabled { opacity:.45; cursor:not-allowed; }
+.hidden { display:none!important; }
+.muted { color:var(--muted); }
+.small { font-size:12px; }
+.eyebrow { color:var(--yellow); font-size:11px; font-weight:bold; letter-spacing:2px; }
+.brand { display:flex; align-items:center; gap:11px; }
+.brand-mark {
+  background:var(--yellow); color:#16052d; font-weight:1000;
+  padding:10px; border-radius:9px; letter-spacing:-1px;
+}
+.brand-name { font-size:21px; font-weight:900; letter-spacing:1px; }
+.brand-name span { color:var(--yellow); }
+.primary {
+  border:0; border-radius:8px; padding:12px 16px;
+  background:var(--yellow); color:#16052d; font-weight:800;
+}
+.secondary {
+  border:1px solid var(--border); border-radius:8px; padding:10px 13px;
+  background:var(--panel2); color:var(--white);
+}
+.danger { color:#ff8d98; }
+.card {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:12px; padding:18px;
+}
+input,select,textarea {
+  width:100%; padding:12px; color:var(--white);
+  background:#11091b; border:1px solid var(--border);
+  border-radius:8px;
+}
+label { display:block; font-size:12px; color:var(--muted); margin-bottom:7px; }
+.field { margin-bottom:15px; }
+#login {
+  min-height:100vh; display:grid; place-items:center; padding:20px;
+  background:radial-gradient(ellipse at 50% 0%,#301052 0%,var(--bg) 65%);
+}
+.login-card { width:min(420px,100%); }
+.login-card .brand { justify-content:center; margin-bottom:28px; }
+.login-card h1 { text-align:center; font-size:27px; }
+.login-card p { text-align:center; line-height:1.6; }
+#app { min-height:100vh; }
+.topbar {
+  min-height:72px; display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding:12px 24px; border-bottom:1px solid var(--border);
+  background:#160b23; position:sticky; top:0; z-index:5;
+}
+.top-actions { display:flex; gap:9px; align-items:center; flex-wrap:wrap; }
+.shell { display:grid; grid-template-columns:220px minmax(0,1fr); min-height:calc(100vh - 72px); }
+.sidebar { padding:22px 14px; border-right:1px solid var(--border); background:#150b21; }
+.nav-button {
+  width:100%; text-align:left; padding:12px; margin-bottom:7px;
+  border:1px solid transparent; border-radius:8px; background:transparent;
+  color:var(--muted);
+}
+.nav-button.active { color:var(--yellow); background:#2a1740; border-color:#4b3163; }
+.sidebar-bottom { margin-top:28px; padding:12px; border-top:1px solid var(--border); }
+main { padding:26px; min-width:0; max-width:1600px; width:100%; margin:0 auto; }
+.page-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:22px; }
+h1,h2,h3,p { margin-top:0; }
+h1 { font-size:clamp(24px,3vw,34px); margin-bottom:8px; }
+h2 { font-size:18px; }
+h3 { font-size:14px; }
+.stats-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; margin-bottom:20px; }
+.stat-value { font-size:27px; font-weight:900; margin:9px 0 5px; }
+.dashboard-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+.session-row {
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:14px 0; border-bottom:1px solid var(--border);
+}
+.session-row:last-child { border-bottom:0; }
+.session-row strong { display:block; margin-bottom:5px; }
+.tag { font-size:10px; letter-spacing:1px; padding:5px 7px; border-radius:5px; background:#342344; color:var(--yellow); }
+.empty { text-align:center; padding:25px 10px; color:var(--muted); line-height:1.6; }
+.clip-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.clip-art {
+  height:125px; display:grid; place-items:center; border-radius:8px;
+  background:linear-gradient(135deg,#31104f,#11091b);
+  border:1px solid #47305c; margin-bottom:13px; color:var(--yellow);
+}
+.clip-art span { font-size:35px; font-weight:900; }
+.clip-card h3 { margin-bottom:6px; }
+.workspace-grid { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(270px,.8fr); gap:17px; }
+.video-placeholder {
+  aspect-ratio:16/9; width:100%; background:#08060b; border:1px solid #453253;
+  border-radius:9px; display:grid; place-items:center; overflow:hidden;
+  position:relative; margin-bottom:14px;
+}
+.video-placeholder video { width:100%; height:100%; object-fit:contain; }
+.video-placeholder .empty-video { text-align:center; padding:15px; color:var(--muted); }
+.live-dot { color:#ff6976; font-weight:bold; font-size:11px; letter-spacing:1px; }
+.telemetry-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-bottom:15px; }
+.telemetry { background:#12091c; border:1px solid var(--border); padding:12px; border-radius:8px; }
+.telemetry .value { font-size:22px; font-weight:900; margin-top:7px; }
+.telemetry .label { font-size:10px; color:var(--muted); letter-spacing:1px; }
+.event-list { max-height:250px; overflow:auto; }
+.event { padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; line-height:1.5; }
+.event time { color:var(--yellow); margin-right:8px; }
+.radio-box { display:flex; flex-direction:column; min-height:400px; }
+.radio-messages { flex:1; min-height:180px; max-height:400px; overflow:auto; margin-bottom:12px; }
+.message { padding:11px 12px; border-radius:8px; margin-bottom:9px; background:#29183a; font-size:13px; line-height:1.5; overflow-wrap:anywhere; }
+.message.engineer { border-left:3px solid var(--yellow); }
+.message.user { border-left:3px solid #7c68e8; }
+.message .sender { display:block; color:var(--yellow); font-size:10px; font-weight:bold; margin-bottom:5px; letter-spacing:1px; }
+.radio-form { display:flex; gap:8px; }
+.radio-form input { min-width:0; }
+.two-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.progress { height:7px; background:#382747; border-radius:5px; overflow:hidden; margin-top:8px; }
+.progress span { display:block; height:100%; background:var(--yellow); width:0; }
+.note { padding:12px; border:1px solid #51402c; border-radius:8px; background:#251b20; color:#e3d4bc; font-size:12px; line-height:1.6; }
+.footer-note { margin-top:20px; color:var(--muted); font-size:11px; line-height:1.6; }
+@media(max-width:1000px) {
+  .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dashboard-grid,.workspace-grid { grid-template-columns:1fr; }
+  .clip-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:680px) {
+  .topbar { padding:12px; position:static; }
+  .brand-name { font-size:17px; }
+  .shell { grid-template-columns:1fr; }
+  .sidebar { border-right:0; border-bottom:1px solid var(--border); padding:9px; display:flex; gap:6px; overflow:auto; }
+  .nav-button { white-space:nowrap; width:auto; margin:0; }
+  .sidebar-bottom { display:none; }
+  main { padding:16px 12px; }
+  .page-heading { flex-direction:column; }
+  .stats-grid { gap:8px; }
+  .card { padding:13px; }
+  .clip-grid { grid-template-columns:1fr; }
+  .telemetry-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .two-fields { grid-template-columns:1fr; gap:0; }
+}
+</style>
+</head>
+<body>
+
+<section id="login">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-mark">PW</div>
+      <div class="brand-name">PITWALL <span>AI</span></div>
+    </div>
+    <div class="eyebrow" style="text-align:center">YOUR RACE. YOUR ENGINEER.</div>
+    <h1>Welcome to the pit wall.</h1>
+    <p class="muted">Your race-control workspace, built for the driver.</p>
+    <form id="login-form" class="card">
+      <div class="field">
+        <label for="driver-name">DRIVER NAME</label>
+        <input id="driver-name" maxlength="40" placeholder="Enter your driver name" required>
+      </div>
+      <button class="primary" type="submit" style="width:100%">Enter PITWALL AI →</button>
+      <p class="small muted" style="margin:13px 0 0">Prototype access only. This is not a secure account or password system.</p>
+    </form>
+  </div>
+</section>
+
+<section id="app" class="hidden">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">PW</div>
+      <div class="brand-name">PITWALL <span>AI</span></div>
+    </div>
+    <div class="top-actions">
+      <span class="small muted" id="welcome-name"></span>
+      <button class="secondary" id="new-session-top">+ New session</button>
+      <button class="secondary" id="sign-out">Exit</button>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <button class="nav-button active" data-page="dashboard">▦ &nbsp; Overview</button>
+      <button class="nav-button" data-page="sessions">◷ &nbsp; Sessions</button>
+      <button class="nav-button" data-page="highlights">▶ &nbsp; Highlights</button>
+      <button class="nav-button" data-page="engineer">◉ &nbsp; Race engineer</button>
+      <div class="sidebar-bottom">
+        <div class="eyebrow">SYSTEM STATUS</div>
+        <p class="small muted" style="margin-top:10px">Interface online</p>
+        <p class="small muted">Live AI not connected</p>
+      </div>
+    </aside>
+
+    <main>
+      <section class="page" id="page-dashboard">
+        <div class="page-heading">
+          <div><div class="eyebrow">CONTROL CENTRE</div><h1>Driver overview</h1><p class="muted">Your sessions, your race data, your pit wall.</p></div>
+          <button class="primary" id="new-session-main">+ Start a session</button>
+        </div>
+        <div class="stats-grid">
+          <div class="card"><div class="small muted">TOTAL SESSIONS</div><div class="stat-value" id="stat-sessions">0</div><div class="small muted">Saved on this browser</div></div>
+          <div class="card"><div class="small muted">RACE EVENTS</div><div class="stat-value" id="stat-events">0</div><div class="small muted">Logged manually</div></div>
+          <div class="card"><div class="small muted">FUEL REMAINING</div><div class="stat-value" id="stat-fuel">—</div><div class="small muted">Current session</div></div>
+          <div class="card"><div class="small muted">ENGINEER STATUS</div><div class="stat-value" style="font-size:18px;color:var(--yellow)">STANDBY</div><div class="small muted">Ready for input</div></div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card"><div class="page-heading"><div><h2>Recent sessions</h2><p class="small muted">Pick up where you left off.</p></div><button class="secondary" data-goto="sessions">View all</button></div><div id="recent-sessions"></div></div>
+          <div class="card"><h2>Race engineer quick start</h2><p class="muted small">Start a session, enter your race details, and use the radio panel to test engineer messages.</p><div class="clip-art" style="height:145px"><span>88</span></div><button class="primary" id="quick-start" style="width:100%">Open race control →</button><p class="footer-note">Live video, automatic telemetry and AI analysis are planned integrations, not active features.</p></div>
+        </div>
+      </section>
+
+      <section class="page hidden" id="page-sessions">
+        <div class="page-heading"><div><div class="eyebrow">SESSION ARCHIVE</div><h1>Race sessions</h1><p class="muted">Your saved practice and race sessions.</p></div><button class="primary" id="new-session-list">+ New session</button></div>
+        <div class="card"><div id="all-sessions"></div></div>
+      </section>
+
+      <section class="page hidden" id="page-highlights">
+        <div class="page-heading"><div><div class="eyebrow">REPLAY ROOM</div><h1>Highlights</h1><p class="muted">Build a collection of memorable racing moments.</p></div></div>
+        <div class="clip-grid" id="highlight-grid"></div>
+        <div class="card" style="margin-top:18px">
+          <h2>Add a clip from your device</h2>
+          <p class="small muted">Select a video file to preview it locally. This does not upload or permanently store the video.</p>
+          <input id="clip-upload" type="file" accept="video/*">
+          <div id="clip-preview" class="hidden" style="margin-top:14px">
+            <video id="uploaded-clip" controls style="width:100%;max-height:400px;background:#000"></video>
+            <button class="secondary" id="clear-clip" style="margin-top:10px">Clear preview</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page hidden" id="page-engineer">
+        <div class="page-heading"><div><div class="eyebrow">TEAM RADIO / RACE CONTROL</div><h1 id="workspace-title">New race session</h1><p class="muted">Short, tactical calls. You stay focused on driving.</p></div><span class="tag">PROTOTYPE</span></div>
+        <div class="workspace-grid">
+          <div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="page-heading"><div><h2>Gameplay feed</h2><span class="live-dot">● VIDEO PREVIEW</span></div><span class="small muted">Local device / capture input</span></div>
+              <div class="video-placeholder" id="video-placeholder">
+                <div class="empty-video"><div style="font-size:36px;margin-bottom:12px">▣</div><strong>No video connected</strong><p class="small">Choose a video file below to preview it.<br>Capture-card integration is not yet implemented.</p></div>
+              </div>
+              <input type="file" id="game-video" accept="video/*">
+              <div class="small muted" style="margin-top:7px">For testing only. This video is not analysed by AI.</div>
+            </div>
+
+            <div class="card" style="margin-bottom:16px">
+              <h2>Race status</h2>
+              <div class="telemetry-grid">
+                <div class="telemetry"><div class="label">FLAG STATUS</div><div class="value" id="flag-display">GREEN</div></div>
+                <div class="telemetry"><div class="label">TIME LEFT</div><div class="value" id="time-display">20:00</div></div>
+                <div class="telemetry"><div class="label">POSITION</div><div class="value" id="position-display">—</div></div>
+              </div>
+              <div class="two-fields">
+                <div class="field"><label for="flag-select">FLAG (MANUAL)</label><select id="flag-select"><option>Green</option><option>Yellow</option><option>Double yellow</option><option>Red</option><option>Blue</option><option>Chequered</option></select></div>
+                <div class="field"><label for="position-input">YOUR POSITION</label><input id="position-input" type="number" min="1" max="99" placeholder="e.g. 8"></div>
+              </div>
+              <div class="two-fields">
+                <div class="field"><label for="minutes-input">RACE TIME LEFT (MIN)</label><input id="minutes-input" type="number" min="0" max="999" value="20"></div>
+                <div class="field"><label for="seconds-input">SECONDS</label><input id="seconds-input" type="number" min="0" max="59" value="0"></div>
+              </div>
+              <button class="primary" id="update-status">Update race status</button>
+            </div>
+
+            <div class="card">
+              <h2>Fuel strategy</h2>
+              <p class="small muted">Enter your readings for a basic estimate. It cannot read ACC telemetry automatically.</p>
+              <div class="two-fields">
+                <div class="field"><label for="fuel-input">FUEL REMAINING (L)</label><input id="fuel-input" type="number" min="0" step="0.1" placeholder="e.g. 32"></div>
+                <div class="field"><label for="fuel-lap-input">FUEL PER LAP (L)</label><input id="fuel-lap-input" type="number" min="0.01" step="0.01" placeholder="e.g. 2.8"></div>
+              </div>
+              <div class="field"><label for="laps-input">LAPS REMAINING (OPTIONAL)</label><input id="laps-input" type="number" min="0" step="1" placeholder="Enter if known"></div>
+              <button class="secondary" id="calculate-fuel">Calculate fuel strategy</button>
+              <div id="fuel-result" class="message engineer" style="margin-top:13px">Enter fuel data to calculate a basic estimate.</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card radio-box" style="margin-bottom:16px">
+              <div class="page-heading"><div><h2>Team radio</h2><p class="small muted">Concise engineer communication</p></div><span class="tag">LOCAL</span></div>
+              <div class="radio-messages" id="radio-messages" aria-live="polite">
+                <div class="message engineer"><span class="sender">PITWALL ENGINEER</span>Radio check. Enter your race situation, driver.</div>
+              </div>
+              <form class="radio-form" id="radio-form"><input id="radio-input" maxlength="400" placeholder="e.g. tyres are sliding..." required><button class="primary" type="submit">Send</button></form>
+              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+                <button class="secondary" id="speak-last">🔊 Speak last call</button>
+                <button class="secondary" id="stop-speech">■ Stop voice</button>
+              </div>
+              <p class="footer-note">Voice uses your browser's built-in speech synthesis, if supported. Replies currently use simple local rules, not a connected AI model.</p>
+            </div>
+
+            <div class="card">
+              <div class="page-heading"><div><h2>Race event log</h2><p class="small muted">Record moments to review later.</p></div></div>
+              <form id="event-form">
+                <div class="field"><label for="event-type">EVENT TYPE</label><select id="event-type"><option>Race start</option><option>Overtake</option><option>Defence</option><option>Lock-up</option><option>Off track</option><option>Yellow flag</option><option>Pit stop</option><option>Tyre issue</option><option>Fuel update</option><option>Other</option></select></div>
+                <div class="field"><label for="event-notes">NOTES (OPTIONAL)</label><input id="event-notes" maxlength="180" placeholder="e.g. passed car into Turn 1"></div>
+                <button class="secondary" type="submit">+ Log event</button>
+              </form>
+              <div class="event-list" id="event-list" style="margin-top:15px"></div>
+            </div>
+            <button class="secondary" id="save-session" style="width:100%;margin-top:14px">Save session changes</button>
+            <p class="footer-note">Session data is stored in this browser when available. Clearing browser data or using a different device may remove or hide saved sessions.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</section>
+
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const STORAGE_KEY = "pitwall-ai-sessions-v1";
+  const PROFILE_KEY = "pitwall-ai-driver-v1";
+  let sessions = [];
+  let activeSessionId = null;
+  let currentClipUrl = null;
+  let currentGameUrl = null;
+  let lastEngineerMessage = "Radio check. Stay focused. Give me your race situation.";
+  let sessionStart = Date.now();
+
+  function makeId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+  }
+  function safeRead(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch { return fallback; }
+  }
+  function safeWrite(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[char]);
+  }
+  function activeSession() {
+    return sessions.find(s => s.id === activeSessionId) || null;
+  }
+  function nowLabel() {
+    return new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+  }
+  function page(name) {
+    document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
+    $("page-" + name).classList.remove("hidden");
+    document.querySelectorAll(".nav-button").forEach(btn =>
+      btn.classList.toggle("active", btn.dataset.page === name)
+    );
+    if (name === "dashboard") renderDashboard();
+    if (name === "sessions") renderSessions();
+    if (name === "highlights") renderHighlights();
+    if (name === "engineer") renderEvents();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function addMessage(sender, text) {
+    const box = document.createElement("div");
+    box.className = "message " + (sender === "DRIVER" ? "user" : "engineer");
+    const name = document.createElement("span");
+    name.className = "sender";
+    name.textContent = sender;
+    const content = document.createElement("div");
+    content.textContent = text;
+    box.append(name,content);
+    $("radio-messages").append(box);
+    $("radio-messages").scrollTop = $("radio-messages").scrollHeight;
+  }
+  function addEvent(type, notes) {
+    const s = activeSession();
+    if (!s) return;
+    s.events.push({type,notes,time:nowLabel(),stamp:Date.now()});
+    s.updated = Date.now();
+    saveAll();
+    renderEvents();
+    renderDashboard();
+  }
+  function saveAll() {
+    const ok = safeWrite(STORAGE_KEY,sessions);
+    if (!ok) alert("Browser storage was unavailable or full. Your latest changes may not persist.");
+    return ok;
+  }
+  function startSession() {
+    const s = {
+      id:makeId(), title:"ACC Session " + (sessions.length + 1),
+      game:"Assetto Corsa Competizione", track:"Not set",
+      created:Date.now(), updated:Date.now(), fuel:null,
+      fuelPerLap:null, lapsRemaining:null, flag:"Green", position:null,
+      timeSeconds:1200, events:[], messages:[]
+    };
+    sessions.unshift(s);
+    activeSessionId = s.id;
+    sessionStart = Date.now();
+    $("workspace-title").textContent = s.title;
+    $("flag-select").value = "Green";
+    $("position-input").value = "";
+    $("minutes-input").value = "20";
+    $("seconds-input").value = "0";
+    $("fuel-input").value = "";
+    $("fuel-lap-input").value = "";
+    $("laps-input").value = "";
+    $("fuel-result").textContent = "Enter fuel data to calculate a basic estimate.";
+    $("radio-messages").replaceChildren();
+    addMessage("PITWALL ENGINEER","Radio check. Give me your situation, driver.");
+    renderEvents();
+    saveAll();
+    page("engineer");
+    renderDashboard();
+  }
+  function openSession(id) {
+    const s = sessions.find(item => item.id === id);
+    if (!s) return;
+    activeSessionId = id;
+    $("workspace-title").textContent = s.title;
+    $("flag-select").value = s.flag || "Green";
+    $("position-input").value = s.position ?? "";
+    $("minutes-input").value = Math.floor((s.timeSeconds ?? 1200)/60);
+    $("seconds-input").value = (s.timeSeconds ?? 1200)%60;
+    $("fuel-input").value = s.fuel ?? "";
+    $("fuel-lap-input").value = s.fuelPerLap ?? "";
+    $("laps-input").value = s.lapsRemaining ?? "";
+    $("radio-messages").replaceChildren();
+    if (s.messages && s.messages.length) {
+      s.messages.forEach(m => addMessage(m.sender,m.text));
+    } else {
+      addMessage("PITWALL ENGINEER","Session loaded. What's happening on track?");
+    }
+    if (s.fuel != null && s.fuelPerLap > 0) calculateFuel(false);
+    else $("fuel-result").textContent = "Enter fuel data to calculate a basic estimate.";
+    renderStatus();
+    renderEvents();
+    page("engineer");
+  }
+  function renderSessionRows(target, list) {
+    const el = $(target);
+    el.replaceChildren();
+    if (!list.length) {
+      el.innerHTML = '<div class="empty">No sessions yet.<br>Start your first race session to build your archive.</div>';
+      return;
+    }
+    list.forEach(s => {
+      const row = document.createElement("div");
+      row.className = "session-row";
+      const info = document.createElement("div");
+      info.innerHTML = `<strong>${esc(s.title)}</strong><div class="small muted">${esc(s.game)} · ${new Date(s.updated).toLocaleDateString()} · ${(s.events||[]).length} events</div>`;
+      const open = document.createElement("button");
+      open.className = "secondary";
+      open.textContent = "Open →";
+      open.addEventListener("click",() => openSession(s.id));
+      row.append(info,open);
+      el.append(row);
+    });
+  }
+  function renderDashboard() {
+    $("stat-sessions").textContent = sessions.length;
+    $("stat-events").textContent = sessions.reduce((n,s) => n + (s.events||[]).length,0);
+    const s = activeSession();
+    $("stat-fuel").textContent = s && s.fuel != null ? Number(s.fuel).toFixed(1) + " L" : "—";
+    renderSessionRows("recent-sessions",sessions.slice(0,4));
+  }
+  function renderSessions() { renderSessionRows("all-sessions",sessions); }
+  function renderHighlights() {
+    const grid = $("highlight-grid");
+    grid.replaceChildren();
+    const totalEvents = sessions.reduce((n,s) => n + (s.events||[]).length,0);
+    const items = [
+      {symbol:"↗",title:"Overtakes",desc:"Race passes you recorded",count:sessions.reduce((n,s)=>n+(s.events||[]).filter(e=>e.type==="Overtake").length,0)},
+      {symbol:"⚑",title:"Flag moments",desc:"Flag events in your log",count:sessions.reduce((n,s)=>n+(s.events||[]).filter(e=>e.type.toLowerCase().includes("flag")).length,0)},
+      {symbol:"◷",title:"Race moments",desc:"All manually logged events",count:totalEvents}
+    ];
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<div class="clip-art"><span>${item.symbol}</span></div><h3>${item.title}</h3><p class="small muted">${item.desc}</p><strong style="color:var(--yellow)">${item.count} recorded</strong>`;
+      grid.append(card);
+    });
+  }
+  function renderStatus() {
+    const s = activeSession();
+    if (!s) return;
+    $("flag-display").textContent = (s.flag || "Green").toUpperCase();
+    $("flag-display").style.color = /yellow|red/i.test(s.flag) ? "#ff747c" : "var(--yellow)";
+    const secs = Math.max(0,Math.floor(s.timeSeconds ?? 1200));
+    $("time-display").textContent = String(Math.floor(secs/60)).padStart(2,"0")+":"+String(secs%60).padStart(2,"0");
+    $("position-display").textContent = s.position ? "P"+s.position : "—";
+  }
+  function renderEvents() {
+    const s = activeSession();
+    const list = $("event-list");
+    list.replaceChildren();
+    if (!s || !s.events.length) {
+      list.innerHTML = '<div class="empty">No events logged yet.</div>';
+      return;
+    }
+    [...s.events].reverse().forEach(e => {
+      const row = document.createElement("div");
+      row.className = "event";
+      const time = document.createElement("time");
+      time.textContent = e.time;
+      const text = document.createElement("span");
+      text.textContent = e.type + (e.notes ? " — " + e.notes : "");
+      row.append(time,text);
+      list.append(row);
+    });
+  }
+  function engineerReply(input) {
+    const text = input.toLowerCase();
+    const s = activeSession();
+    if (/yellow flag|yellow flags|yellow sector/.test(text))
+      return "Yellow flag reported. Lift, avoid overtaking and be ready to slow. Confirm the sector is clear.";
+    if (/red flag/.test(text))
+      return "Red flag reported. Slow safely and follow the game's instructions. No overtaking.";
+    if (/blue flag/.test(text))
+      return "Blue flag. Check mirrors and allow the faster car through safely when appropriate.";
+    if (/fuel/.test(text) && s && s.fuel != null && s.fuelPerLap > 0)
+      return fuelAdvice(s);
+    if (/slid|sliding|oversteer|rear.*loose|spin/.test(text))
+      return "Copy. Prioritise clean exits: soften throttle pickup, avoid aggressive kerbs and keep the rear settled. Report whether it happens on entry or exit.";
+    if (/understeer|push wide|front.*slide/.test(text))
+      return "Copy. Reduce entry speed slightly and avoid asking for more front grip mid-corner. Check whether it improves over the next lap.";
+    if (/tyre|tires|temperature|graining/.test(text))
+      return "Copy. Keep inputs smooth and avoid wheelspin. I need tyre readings or lap-to-lap changes before recommending a setup change.";
+    if (/pit|box|stop/.test(text))
+      return "Pit decision needs the remaining time, tyre condition and fuel margin. Give me those numbers and we'll assess it.";
+    if (/overtake|pass|attack/.test(text))
+      return "Prioritise a clean exit and a move you can complete safely. Don't force a gap that isn't there.";
+    if (/behind|defend|car behind/.test(text))
+      return "Defend predictably and protect the exit. Avoid weaving and leave racing room.";
+    if (/position|place/.test(text) && s && s.position)
+      return "You're recorded as P" + s.position + ". Tell me the gap or target ahead for a useful next call.";
+    if (/hello|radio check|can you hear/.test(text))
+      return "Loud and clear. Keep it short while driving — what do you need?";
+    if (/help|what can you do/.test(text))
+      return "I can log race events, calculate basic fuel estimates and respond to common race scenarios. Live game vision and external AI aren't connected yet.";
+    return "Copy. I need one concrete detail to make a useful call: current position, gap, fuel, tyre behaviour or the corner where it happens.";
+  }
+  function fuelAdvice(s) {
+    const fuel = Number(s.fuel), perLap = Number(s.fuelPerLap);
+    if (!(fuel >= 0) || !(perLap > 0)) return "Enter valid fuel and consumption readings first.";
+    const laps = fuel / perLap;
+    if (s.lapsRemaining != null && s.lapsRemaining !== "") {
+      const need = Number(s.lapsRemaining) * perLap;
+      const margin = fuel - need;
+      return margin >= 0
+        ? `Fuel check: about ${laps.toFixed(1)} laps available. Estimated margin is ${margin.toFixed(1)} L for ${s.lapsRemaining} laps, before any safety margin.`
+        : `Fuel check: about ${laps.toFixed(1)} laps available. Short by approximately ${Math.abs(margin).toFixed(1)} L for ${s.lapsRemaining} laps. Recheck consumption and remaining distance.`;
+    }
+    return `Fuel check: about ${laps.toFixed(1)} laps available at ${perLap.toFixed(2)} L/lap. Enter laps remaining for a race-finish estimate.`;
+  }
+  function calculateFuel(announce=true) {
+    const s = activeSession();
+    if (!s) return;
+    const fuel = Number($("fuel-input").value);
+    const perLap = Number($("fuel-lap-input").value);
+    const lapsRaw = $("laps-input").value;
+    if ($("fuel-input").value === "" || $("fuel-lap-input").value === "" || fuel < 0 || !(perLap > 0)) {
+      $("fuel-result").textContent = "Enter a non-negative fuel amount and a fuel-per-lap value above zero.";
+      return;
+    }
+    s.fuel = fuel;
+    s.fuelPerLap = perLap;
+    s.lapsRemaining = lapsRaw === "" ? null : Math.max(0,Number(lapsRaw));
+    const result = fuelAdvice(s);
+    $("fuel-result").textContent = result;
+    s.updated = Date.now();
+    saveAll();
+    renderDashboard();
+    if (announce) {
+      addMessage("PITWALL ENGINEER",result);
+      saveMessage("PITWALL ENGINEER",result);
+    }
+  }
+  function saveMessage(sender,text) {
+    const s = activeSession();
+    if (!s) return;
+    s.messages = s.messages || [];
+    s.messages.push({sender,text});
+    if (s.messages.length > 100) s.messages = s.messages.slice(-100);
+    s.updated = Date.now();
+    saveAll();
+  }
+  function sendRadio(text) {
+    const s = activeSession();
+    if (!s || !text.trim()) return;
+    addMessage("DRIVER",text.trim());
+    saveMessage("DRIVER",text.trim());
+    const reply = engineerReply(text.trim());
+    addMessage("PITWALL ENGINEER",reply);
+    saveMessage("PITWALL ENGINEER",reply);
+    lastEngineerMessage = reply;
+  }
+  function speak(text) {
+    if (!("speechSynthesis" in window)) {
+      alert("Speech synthesis is not supported by this browser.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.15;
+    utterance.pitch = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  $("login-form").addEventListener("submit",event => {
+    event.preventDefault();
+    const name = $("driver-name").value.trim();
+    if (!name) return;
+    safeWrite(PROFILE_KEY,name);
+    $("welcome-name").textContent = name;
+    $("login").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    renderDashboard();
+  });
+  $("sign-out").addEventListener("click",() => {
+    $("app").classList.add("hidden");
+    $("login").classList.remove("hidden");
+    window.speechSynthesis?.cancel();
+  });
+  const savedName = safeRead(PROFILE_KEY,"");
+  if (typeof savedName === "string" && savedName) $("driver-name").value = savedName;
+
+  sessions = safeRead(STORAGE_KEY,[]);
+  if (!Array.isArray(sessions)) sessions = [];
+  sessions = sessions.filter(s => s && typeof s.id === "string" && Array.isArray(s.events));
+  document.querySelectorAll("[data-page]").forEach(btn => btn.addEventListener("click",() => page(btn.dataset.page)));
+  document.querySelectorAll("[data-goto]").forEach(btn => btn.addEventListener("click",() => page(btn.dataset.goto)));
+  ["new-session-top","new-session-main","new-session-list","quick-start"].forEach(id => $(id).addEventListener("click",startSession));
+  $("update-status").addEventListener("click",() => {
+    const s = activeSession();
+    if (!s) return;
+    s.flag = $("flag-select").value;
+    const pos = $("position-input").value;
+    s.position = pos === "" ? null : Number(pos);
+    s.timeSeconds = Math.max(0,Number($("minutes-input").value || 0)*60+Number($("seconds-input").value || 0));
+    s.updated = Date.now();
+    saveAll();
+    renderStatus();
+    addEvent("Race status update",s.flag + (s.position ? ", P"+s.position : ""));
+    const reply = s.flag.toLowerCase().includes("yellow")
+      ? "Yellow flag noted. Lift, avoid overtaking and prepare to slow in the affected sector."
+      : s.flag.toLowerCase() === "red"
+      ? "Red flag noted. Slow safely and follow the game's instructions."
+      : "Status updated. Keep your focus on traffic and track conditions.";
+    addMessage("PITWALL ENGINEER",reply);
+    saveMessage("PITWALL ENGINEER",reply);
+  });
+  $("calculate-fuel").addEventListener("click",() => calculateFuel(true));
+  $("radio-form").addEventListener("submit",event => {
+    event.preventDefault();
+    const input = $("radio-input");
+    sendRadio(input.value);
+    input.value = "";
+    input.focus();
+  });
+  $("speak-last").addEventListener("click",() => speak(lastEngineerMessage));
+  $("stop-speech").addEventListener("click",() => window.speechSynthesis?.cancel());
+  $("event-form").addEventListener("submit",event => {
+    event.preventDefault();
+    const notes = $("event-notes").value.trim();
+    addEvent($("event-type").value,notes);
+    $("event-notes").value = "";
+  });
+  $("save-session").addEventListener("click",() => {
+    const s = activeSession();
+    if (!s) { alert("Start a session first."); return; }
+    s.title = $("workspace-title").textContent;
+    s.updated = Date.now();
+    saveAll();
+    renderDashboard();
+    alert("Session saved in this browser.");
+  });
+  $("clip-upload").addEventListener("change",event => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    if (currentClipUrl) URL.revokeObjectURL(currentClipUrl);
+    currentClipUrl = URL.createObjectURL(file);
+    $("uploaded-clip").src = currentClipUrl;
+    $("clip-preview").classList.remove("hidden");
+  });
+  $("clear-clip").addEventListener("click",() => {
+    $("uploaded-clip").pause();
+    $("uploaded-clip").removeAttribute("src");
+    $("uploaded-clip").load();
+    $("clip-upload").value = "";
+    $("clip-preview").classList.add("hidden");
+    if (currentClipUrl) URL.revokeObjectURL(currentClipUrl);
+    currentClipUrl = null;
+  });
+  $("game-video").addEventListener("change",event => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    if (currentGameUrl) URL.revokeObjectURL(currentGameUrl);
+    currentGameUrl = URL.createObjectURL(file);
+    const video = document.createElement("video");
+    video.controls = true;
+    video.playsInline = true;
+    video.src = currentGameUrl;
+    const holder = $("video-placeholder");
+    holder.replaceChildren(video);
+  });
+  window.addEventListener("beforeunload",() => {
+    if (currentClipUrl) URL.revokeObjectURL(currentClipUrl);
+    if (currentGameUrl) URL.revokeObjectURL(currentGameUrl);
+  });
+
+  renderDashboard();
+  renderSessions();
+  renderHighlights();
+})();
+</script>
+</body>
+</html>
