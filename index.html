@@ -24,23 +24,23 @@ body {
 button,input,select,textarea { font:inherit; }
 button { cursor:pointer; }
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
-  outline:2px solid var(--turquoise); outline-offset:2px;
+  outline:2px solid var(--yellow); outline-offset:2px;
 }
 button:disabled { opacity:.45; cursor:not-allowed; }
 .hidden { display:none!important; }
 .muted { color:var(--muted); }
 .small { font-size:12px; }
-.eyebrow { color:var(--turquoise); font-size:11px; font-weight:bold; letter-spacing:2px; }
+.eyebrow { color:var(--yellow); font-size:11px; font-weight:bold; letter-spacing:2px; }
 .brand { display:flex; align-items:center; gap:11px; }
 .brand-mark {
-  background:var(--turquoise); color:#16052d; font-weight:1000;
+  background:var(--yellow); color:#16052d; font-weight:1000;
   padding:10px; border-radius:9px; letter-spacing:-1px;
 }
 .brand-name { font-size:21px; font-weight:900; letter-spacing:1px; }
-.brand-name span { color:var(--turquoise); }
+.brand-name span { color:var(--yellow); }
 .primary {
   border:0; border-radius:8px; padding:12px 16px;
-  background:var(--turquoise); color:#16052d; font-weight:800;
+  background:var(--yellow); color:#16052d; font-weight:800;
 }
 .secondary {
   border:1px solid var(--border); border-radius:8px; padding:10px 13px;
@@ -80,7 +80,7 @@ label { display:block; font-size:12px; color:var(--muted); margin-bottom:7px; }
   border:1px solid transparent; border-radius:8px; background:transparent;
   color:var(--muted);
 }
-.nav-button.active { color:var(--turquoise); background:#2a1740; border-color:#4b3163; }
+.nav-button.active { color:var(--yellow); background:#2a1740; border-color:#4b3163; }
 .sidebar-bottom { margin-top:28px; padding:12px; border-top:1px solid var(--border); }
 main { padding:26px; min-width:0; max-width:1600px; width:100%; margin:0 auto; }
 .page-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:22px; }
@@ -97,13 +97,13 @@ h3 { font-size:14px; }
 }
 .session-row:last-child { border-bottom:0; }
 .session-row strong { display:block; margin-bottom:5px; }
-.tag { font-size:10px; letter-spacing:1px; padding:5px 7px; border-radius:5px; background:#342344; color:var(--turquoise); }
+.tag { font-size:10px; letter-spacing:1px; padding:5px 7px; border-radius:5px; background:#342344; color:var(--yellow); }
 .empty { text-align:center; padding:25px 10px; color:var(--muted); line-height:1.6; }
 .clip-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
 .clip-art {
   height:125px; display:grid; place-items:center; border-radius:8px;
   background:linear-gradient(135deg,#31104f,#11091b);
-  border:1px solid #47305c; margin-bottom:13px; color:var(--turquoise);
+  border:1px solid #47305c; margin-bottom:13px; color:var(--yellow);
 }
 .clip-art span { font-size:35px; font-weight:900; }
 .clip-card h3 { margin-bottom:6px; }
@@ -122,18 +122,18 @@ h3 { font-size:14px; }
 .telemetry .label { font-size:10px; color:var(--muted); letter-spacing:1px; }
 .event-list { max-height:250px; overflow:auto; }
 .event { padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; line-height:1.5; }
-.event time { color:var(--turquoise); margin-right:8px; }
+.event time { color:var(--yellow); margin-right:8px; }
 .radio-box { display:flex; flex-direction:column; min-height:400px; }
 .radio-messages { flex:1; min-height:180px; max-height:400px; overflow:auto; margin-bottom:12px; }
 .message { padding:11px 12px; border-radius:8px; margin-bottom:9px; background:#29183a; font-size:13px; line-height:1.5; overflow-wrap:anywhere; }
-.message.engineer { border-left:3px solid var(--turquoise); }
+.message.engineer { border-left:3px solid var(--yellow); }
 .message.user { border-left:3px solid #7c68e8; }
-.message .sender { display:block; color:var(--turquoise); font-size:10px; font-weight:bold; margin-bottom:5px; letter-spacing:1px; }
+.message .sender { display:block; color:var(--yellow); font-size:10px; font-weight:bold; margin-bottom:5px; letter-spacing:1px; }
 .radio-form { display:flex; gap:8px; }
 .radio-form input { min-width:0; }
 .two-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .progress { height:7px; background:#382747; border-radius:5px; overflow:hidden; margin-top:8px; }
-.progress span { display:block; height:100%; background:var(--turquoise); width:0; }
+.progress span { display:block; height:100%; background:var(--yellow); width:0; }
 .note { padding:12px; border:1px solid #51402c; border-radius:8px; background:#251b20; color:#e3d4bc; font-size:12px; line-height:1.6; }
 .footer-note { margin-top:20px; color:var(--muted); font-size:11px; line-height:1.6; }
 @media(max-width:1000px) {
@@ -171,11 +171,25 @@ h3 { font-size:14px; }
     <p class="muted">Your race-control workspace, built for the driver.</p>
     <form id="login-form" class="card">
       <div class="field">
-        <label for="driver-name">DRIVER NAME</label>
-        <input id="driver-name" maxlength="40" placeholder="Enter your driver name" required>
+        <label for="account-email">EMAIL ADDRESS</label>
+        <input id="account-email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
       </div>
-      <button class="primary" type="submit" style="width:100%">Enter PITWALL AI →</button>
-      <p class="small muted" style="margin:13px 0 0">Prototype access only. This is not a secure account or password system.</p>
+      <div class="field">
+        <label for="account-password">PASSWORD</label>
+        <input id="account-password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters" required>
+      </div>
+      <button class="primary" id="sign-in-button" type="submit" style="width:100%">Sign in →</button>
+      <button class="secondary" id="sign-up-button" type="button" style="width:100%;margin-top:9px">Create account</button>
+      <button class="secondary" id="forgot-password-button" type="button" style="width:100%;margin-top:9px">Forgot password?</button>
+      <div id="auth-message" class="small muted" role="status" aria-live="polite" style="margin-top:13px;line-height:1.5"></div>
+      <div id="recovery-panel" class="hidden" style="margin-top:15px">
+        <div class="field">
+          <label for="new-password">NEW PASSWORD</label>
+          <input id="new-password" type="password" autocomplete="new-password" minlength="8" placeholder="Choose a new password">
+        </div>
+        <button class="primary" id="save-new-password" type="button" style="width:100%">Save new password</button>
+      </div>
+      <p class="small muted" style="margin:13px 0 0">Create an account with your email and verify it before signing in. Use a unique password.</p>
     </form>
   </div>
 </section>
@@ -319,12 +333,23 @@ h3 { font-size:14px; }
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
   "use strict";
   const $ = id => document.getElementById(id);
-  const STORAGE_KEY = "pitwall-ai-sessions-v1";
-  const PROFILE_KEY = "pitwall-ai-driver-v1";
+  // Paste your Supabase Project URL and publishable key below.
+  // Never put a Supabase secret/service_role key in this public file.
+  const SUPABASE_URL = "https://wwahmahjkfrayecjuuyo.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_s9wOtufeNov0t91_U9mjiw_QeOwQqW6";
+  const supabaseReady = window.supabase && SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("PASTE_YOUR") && !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR");
+  const supabaseClient = supabaseReady
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+    : null;
+  let currentUser = null;
+  let STORAGE_KEY = "pitwall-ai-sessions-v1";
+  let PROFILE_KEY = "pitwall-ai-driver-v1";
   let sessions = [];
   let activeSessionId = null;
   let currentClipUrl = null;
@@ -619,23 +644,172 @@ h3 { font-size:14px; }
     window.speechSynthesis.speak(utterance);
   }
 
-  $("login-form").addEventListener("submit",event => {
-    event.preventDefault();
-    const name = $("driver-name").value.trim();
-    if (!name) return;
-    safeWrite(PROFILE_KEY,name);
-    $("welcome-name").textContent = name;
+  function showAuthMessage(message, isError=false) {
+    const el = $("auth-message");
+    el.textContent = message;
+    el.style.color = isError ? "#ff8d98" : "var(--muted)";
+  }
+
+  function showLogin() {
+    $("app").classList.add("hidden");
+    $("login").classList.remove("hidden");
+  }
+
+  function showAppForUser(user) {
+    currentUser = user;
+    // Keep this prototype's local session archive separate per signed-in account.
+    // Cloud sync is a separate later step; this does not upload sessions.
+    STORAGE_KEY = "pitwall-ai-sessions-v1:" + user.id;
+    PROFILE_KEY = "pitwall-ai-driver-v1:" + user.id;
+    sessions = safeRead(STORAGE_KEY, []);
+    if (!Array.isArray(sessions)) sessions = [];
+    sessions = sessions.filter(s => s && typeof s.id === "string" && Array.isArray(s.events));
+    const displayName = (user.user_metadata && user.user_metadata.driver_name) ||
+      (user.email ? user.email.split("@")[0] : "Driver");
+    $("welcome-name").textContent = displayName;
     $("login").classList.add("hidden");
     $("app").classList.remove("hidden");
     renderDashboard();
+    renderSessions();
+    renderHighlights();
+  }
+
+  function friendlyAuthError(error) {
+    const msg = (error && error.message) || "Something went wrong. Please try again.";
+    if (/already registered|user already exists/i.test(msg))
+      return "An account may already exist for this email. Try signing in or use Forgot password.";
+    if (/invalid login credentials/i.test(msg))
+      return "Email or password is incorrect. Check your details or use Forgot password.";
+    if (/email not confirmed/i.test(msg))
+      return "Please verify your email using the link we sent you before signing in.";
+    if (/password should be at least|weak password/i.test(msg))
+      return "Choose a stronger password with at least 8 characters.";
+    return msg;
+  }
+
+  $("login-form").addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!supabaseClient) {
+      showAuthMessage("Supabase is not configured yet. Add your Project URL and publishable key in index.html.", true);
+      return;
+    }
+    const email = $("account-email").value.trim();
+    const password = $("account-password").value;
+    $("sign-in-button").disabled = true;
+    $("sign-up-button").disabled = true;
+    showAuthMessage("Signing in…");
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      if (data.user) showAppForUser(data.user);
+    } catch (error) {
+      showAuthMessage(friendlyAuthError(error), true);
+    } finally {
+      $("sign-in-button").disabled = false;
+      $("sign-up-button").disabled = false;
+    }
   });
-  $("sign-out").addEventListener("click",() => {
-    $("app").classList.add("hidden");
-    $("login").classList.remove("hidden");
+
+  $("sign-up-button").addEventListener("click", async () => {
+    if (!supabaseClient) {
+      showAuthMessage("Supabase is not configured yet. Add your Project URL and publishable key in index.html.", true);
+      return;
+    }
+    const email = $("account-email").value.trim();
+    const password = $("account-password").value;
+    if (!email || !$("account-email").checkValidity()) {
+      showAuthMessage("Enter a valid email address first.", true); $("account-email").focus(); return;
+    }
+    if (password.length < 8) {
+      showAuthMessage("Choose a password with at least 8 characters.", true); $("account-password").focus(); return;
+    }
+    $("sign-in-button").disabled = true;
+    $("sign-up-button").disabled = true;
+    showAuthMessage("Creating your account…");
+    try {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email, password,
+        options: { emailRedirectTo: window.location.origin + window.location.pathname }
+      });
+      if (error) throw error;
+      if (data.session && data.user) {
+        showAppForUser(data.user);
+      } else {
+        showAuthMessage("Registration started. Check your inbox for the verification link before signing in.");
+      }
+    } catch (error) {
+      showAuthMessage(friendlyAuthError(error), true);
+    } finally {
+      $("sign-in-button").disabled = false;
+      $("sign-up-button").disabled = false;
+    }
+  });
+
+  $("forgot-password-button").addEventListener("click", async () => {
+    if (!supabaseClient) {
+      showAuthMessage("Supabase is not configured yet. Add your Project URL and publishable key in index.html.", true);
+      return;
+    }
+    const email = $("account-email").value.trim();
+    if (!email || !$("account-email").checkValidity()) {
+      showAuthMessage("Enter your email address first, then choose Forgot password.", true);
+      $("account-email").focus(); return;
+    }
+    try {
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + window.location.pathname
+      });
+      if (error) throw error;
+      showAuthMessage("If an account can be recovered for that address, a password-reset email will be sent.");
+    } catch (error) {
+      showAuthMessage(friendlyAuthError(error), true);
+    }
+  });
+
+  $("save-new-password").addEventListener("click", async () => {
+    const password = $("new-password").value;
+    if (password.length < 8) { showAuthMessage("Choose a password with at least 8 characters.", true); return; }
+    try {
+      const { error } = await supabaseClient.auth.updateUser({ password });
+      if (error) throw error;
+      $("recovery-panel").classList.add("hidden");
+      showAuthMessage("Password updated. You can now continue to PITWALL AI.");
+    } catch (error) {
+      showAuthMessage(friendlyAuthError(error), true);
+    }
+  });
+
+  $("sign-out").addEventListener("click", async () => {
     window.speechSynthesis?.cancel();
+    if (supabaseClient) await supabaseClient.auth.signOut();
+    currentUser = null;
+    sessions = [];
+    showLogin();
+    showAuthMessage("You have signed out.");
   });
-  const savedName = safeRead(PROFILE_KEY,"");
-  if (typeof savedName === "string" && savedName) $("driver-name").value = savedName;
+
+  if (supabaseClient) {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        showLogin();
+        $("recovery-panel").classList.remove("hidden");
+        showAuthMessage("Choose a new password below.");
+      } else if (session && session.user) {
+        showAppForUser(session.user);
+      } else if (event === "SIGNED_OUT") {
+        currentUser = null;
+        sessions = [];
+        showLogin();
+      }
+    });
+    supabaseClient.auth.getSession().then(({ data }) => {
+      if (data.session && data.session.user) showAppForUser(data.session.user);
+      else showLogin();
+    });
+  } else {
+    showLogin();
+    showAuthMessage("Setup needed: add your Supabase Project URL and publishable key to this file.");
+  }
 
   sessions = safeRead(STORAGE_KEY,[]);
   if (!Array.isArray(sessions)) sessions = [];
@@ -721,9 +895,6 @@ h3 { font-size:14px; }
     if (currentGameUrl) URL.revokeObjectURL(currentGameUrl);
   });
 
-  renderDashboard();
-  renderSessions();
-  renderHighlights();
 })();
 </script>
 </body>
