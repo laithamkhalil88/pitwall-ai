@@ -202,6 +202,78 @@ h3 { font-size:14px; }
   .telemetry-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .two-fields { grid-template-columns:1fr; gap:0; }
 }
+
+/* Three-column engineer workspace, race overlays, and customisation */
+#page-engineer { height:auto; min-height:calc(100vh - 110px); overflow:visible; }
+#page-engineer main { max-width:none; }
+#page-engineer .engineer-heading { margin-bottom:12px; }
+#page-engineer .flag-ribbon { position:sticky; top:72px; z-index:4; margin-bottom:12px; }
+.flag-ribbon-note { margin-left:auto; font-weight:500; letter-spacing:0; opacity:.9; }
+.engineer-layout { display:grid; grid-template-columns:minmax(220px,1.05fr) minmax(300px,1.15fr) minmax(270px,.9fr); align-items:start; gap:13px; }
+.engineer-video-panel,.race-data-panel,.engineer-call-panel { min-width:0; }
+.panel-heading { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+.panel-heading h2 { margin:0 0 6px; }
+.engineer-video-panel .video-placeholder { aspect-ratio:4/3; min-height:230px; margin-bottom:12px; }
+.engineer-video-panel .video-placeholder video { width:100%; height:100%; object-fit:contain; }
+.race-data-board { aspect-ratio:4/3; min-height:340px; max-height:560px; position:relative; overflow:hidden; border:1px solid #423050; border-radius:10px; padding:12px; background:radial-gradient(ellipse at 50% 0%,rgba(0,229,212,.08),transparent 55%),#10091a; }
+.data-hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.data-hero { padding:12px; border:1px solid #3a2a49; border-radius:8px; background:linear-gradient(135deg,#251437,#130c1e); }
+.data-label,.data-stat span,.overlay-stat-grid span { display:block; font-size:9px; letter-spacing:1.2px; color:var(--muted); font-weight:bold; }
+.data-big { font-size:clamp(26px,3vw,42px); line-height:1.1; font-weight:900; margin:8px 0 4px; }
+.data-caption { color:var(--muted); font-size:10px; }
+.data-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:8px; }
+.data-stat { padding:9px; background:#191023; border:1px solid #332440; border-radius:7px; min-width:0; }
+.data-stat strong { display:block; font-size:14px; margin-top:6px; overflow-wrap:anywhere; }
+.data-footnote { display:flex; align-items:flex-start; gap:7px; margin-top:10px; font-size:10px; color:var(--muted); line-height:1.4; }
+.status-dot { display:inline-block; flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#26d07c; box-shadow:0 0 8px #26d07c; margin-top:3px; }
+.status-waiting { background:#d9a441; box-shadow:0 0 7px rgba(217,164,65,.45); }
+.manual-data-fields { padding-top:14px; }
+.manual-data-fields .field { margin-bottom:10px; }
+.manual-data-fields .two-fields { gap:8px; }
+.demo-actions { display:flex; gap:7px; align-items:center; flex-wrap:wrap; margin-top:10px; }
+.demo-actions button { padding:8px 10px; font-size:11px; }
+.engineer-call-panel { display:flex; flex-direction:column; min-height:600px; }
+.call-header { display:flex; align-items:center; gap:10px; }
+.call-header h2 { margin:3px 0; }
+.call-avatar { display:grid; place-items:center; width:46px; height:46px; border-radius:50%; background:var(--turquoise); color:#16052d; font-weight:1000; flex:0 0 auto; }
+.call-live-dot { margin-left:auto; width:9px; height:9px; border-radius:50%; background:#5a4b65; }
+.call-live-dot.connected { background:#25d982; box-shadow:0 0 10px #25d982; }
+.call-wave { height:74px; display:flex; align-items:center; justify-content:center; gap:5px; margin:12px 0; border-radius:9px; background:#130b1e; border:1px solid var(--border); }
+.call-wave i { display:block; width:4px; height:12px; border-radius:4px; background:var(--turquoise); opacity:.65; }
+.call-wave.active i { animation:wavePulse .72s ease-in-out infinite alternate; }
+.call-wave.active i:nth-child(3n) { animation-delay:.2s; }.call-wave.active i:nth-child(2n) { animation-delay:.4s; }
+@keyframes wavePulse { from { height:8px; opacity:.4; } to { height:38px; opacity:1; } }
+.call-transcript { flex:1; min-height:125px; max-height:230px; overflow:auto; padding:2px 0; }
+.last-call-box { border:1px solid var(--border); border-radius:8px; padding:11px; margin:10px 0; background:#150d20; }
+.last-call-box p { margin:6px 0 0; font-size:13px; line-height:1.5; }
+.call-controls { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.call-controls button { padding:11px 8px; }
+.call-connect.connected { background:#2a1740; color:var(--white); border:1px solid #684b80; }
+.danger-button { border-color:#6b303b; color:#ff9ba4; }
+.call-state-note { margin-top:12px; line-height:1.5; }
+.race-overlay { position:absolute; z-index:3; inset:0; overflow:auto; padding:clamp(15px,3vw,24px); background:linear-gradient(135deg,rgba(16,7,28,.98),rgba(34,1,91,.97) 55%,rgba(0,80,80,.97)); border:2px solid var(--turquoise); border-radius:9px; animation:overlayIn .38s ease-out both; }
+.race-overlay.hidden { display:none!important; }
+@keyframes overlayIn { from { opacity:0; transform:translateY(12px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+.overlay-kicker { font-size:10px; letter-spacing:2px; color:var(--turquoise); font-weight:900; }
+.race-overlay h2 { font-size:clamp(24px,3vw,36px); margin:8px 0; }
+.overlay-intro { color:#d2c9e0; font-size:12px; }
+.overlay-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:15px 0; }
+.overlay-stat-grid > div { padding:10px; border:1px solid rgba(255,255,255,.16); background:rgba(0,0,0,.22); border-radius:7px; }
+.overlay-stat-grid strong { display:block; margin-top:7px; font-size:16px; overflow-wrap:anywhere; }
+.overlay-stat-grid .wide { grid-column:1/-1; }
+.finish-overlay { background:linear-gradient(145deg,rgba(16,7,28,.98),rgba(35,24,51,.98)); border-color:#fff; }
+.finish-overlay .overlay-kicker { color:#fff; }
+.finish-position { font-size:clamp(42px,5vw,64px); line-height:1; font-weight:1000; color:var(--turquoise); margin:12px 0; }
+.profile-preview { display:flex; align-items:center; gap:13px; border:1px solid var(--border); border-radius:10px; padding:15px; margin:0 0 18px; background:linear-gradient(120deg,#22015b,#14252d); border-left:5px solid var(--turquoise); }
+.profile-preview > span { font-size:35px; font-weight:1000; color:var(--turquoise); }
+.profile-preview strong,.profile-preview small { display:block; }.profile-preview small { color:var(--muted); margin-top:5px; }
+.divider-line { height:1px; background:var(--border); margin:18px 0; }
+.status-line { display:flex; align-items:flex-start; gap:10px; margin:15px 0; }.status-line p { margin:5px 0 0; line-height:1.5; }
+#page-profile .profile-grid,#page-settings .settings-grid { max-width:1100px; }
+@media(max-width:1180px) { .engineer-layout { grid-template-columns:minmax(220px,1fr) minmax(290px,1fr); } .engineer-call-panel { grid-column:1/-1; min-height:420px; } .call-transcript { max-height:180px; } }
+@media(max-width:760px) { #page-engineer .flag-ribbon { top:0; } .engineer-layout { grid-template-columns:1fr; } .engineer-call-panel { grid-column:auto; } .race-data-board { aspect-ratio:auto; min-height:390px; } .engineer-video-panel .video-placeholder { min-height:220px; } .call-controls { grid-template-columns:1fr 1fr; } }
+@media(prefers-reduced-motion:reduce) { .call-wave.active i,.race-overlay { animation:none!important; } }
+
 </style>
 </head>
 <body>
@@ -294,49 +366,67 @@ h3 { font-size:14px; }
       </section>
 
       <section class="page hidden" id="page-profile">
-        <div class="page-heading"><div><div class="eyebrow">DRIVER ID</div><h1>Your profile</h1><p class="muted">Your PITWALL AI driver details.</p></div></div>
-        <div class="profile-grid"><div class="card"><h2>Driver details</h2><div class="field"><label for="profile-name">DRIVER NAME</label><input id="profile-name" maxlength="60" placeholder="Your racing name"></div><div class="field"><label for="profile-number">RACE NUMBER</label><input id="profile-number" type="number" min="0" max="999" placeholder="e.g. 88"></div><div class="field"><label for="profile-game">PRIMARY GAME</label><input id="profile-game" value="Assetto Corsa Competizione" maxlength="80"></div><button class="primary" id="save-profile">Save profile</button></div><div class="card"><h2>Account</h2><p class="muted small">Signed in as</p><p id="profile-email" style="overflow-wrap:anywhere">—</p><p class="footer-note">Profile details are stored in this browser for your account on this device.</p></div></div>
+        <div class="page-heading"><div><div class="eyebrow">DRIVER ID</div><h1>Your profile</h1><p class="muted">Customise your identity on the PITWALL AI timing screens.</p></div></div>
+        <div class="profile-grid">
+          <div class="card"><h2>Driver details</h2><div class="profile-preview" id="profile-preview"><span id="profile-preview-number">88</span><div><strong id="profile-preview-name">YOUR NAME</strong><small id="profile-preview-team">YOUR TEAM</small></div></div>
+            <div class="field"><label for="profile-name">DRIVER NAME</label><input id="profile-name" maxlength="60" placeholder="Your racing name"></div>
+            <div class="two-fields"><div class="field"><label for="profile-number">RACE NUMBER</label><input id="profile-number" type="number" min="0" max="999" placeholder="88"></div><div class="field"><label for="profile-nationality">NATIONALITY</label><input id="profile-nationality" maxlength="40" placeholder="e.g. British"></div></div>
+            <div class="field"><label for="profile-team">TEAM NAME</label><input id="profile-team" maxlength="60" placeholder="Your team"></div>
+            <div class="field"><label for="profile-game">PRIMARY GAME</label><input id="profile-game" value="Assetto Corsa Competizione" maxlength="80"></div>
+            <div class="field"><label for="profile-colour">ACCENT COLOUR</label><select id="profile-colour"><option value="#00e5d4">PITWALL Turquoise</option><option value="#cef409">Neon yellow</option><option value="#a78bfa">Violet</option><option value="#ff6b9a">Pink</option><option value="#60a5fa">Blue</option></select></div>
+            <button class="primary" id="save-profile">Save profile</button><span id="profile-save-status" class="small muted" style="margin-left:10px" role="status"></span>
+          </div>
+          <div class="card"><h2>Account</h2><p class="muted small">Signed in as</p><p id="profile-email" style="overflow-wrap:anywhere">—</p><div class="divider-line"></div><h3>Driver card</h3><p class="small muted">Your name, number, team and accent colour are used for your local driver identity. More detailed stats and uploaded avatars can be added later.</p><p class="footer-note">Profile details are stored in this browser for your account on this device.</p></div>
+        </div>
       </section>
       <section class="page hidden" id="page-settings">
-        <div class="page-heading"><div><div class="eyebrow">PREFERENCES</div><h1>Settings</h1><p class="muted">Control your local race engineer experience.</p></div></div>
-        <div class="settings-grid"><div class="card"><h2>Radio preferences</h2><div class="field"><label for="voice-rate">VOICE SPEED</label><select id="voice-rate"><option value="0.95">Calm</option><option value="1.15" selected>Standard</option><option value="1.3">Quick</option></select></div><div class="field"><label for="voice-enabled">VOICE OUTPUT</label><select id="voice-enabled"><option value="on" selected>Enabled</option><option value="off">Muted by default</option></select></div><button class="primary" id="save-settings">Save settings</button></div><div class="card"><h2>Current capabilities</h2><p class="small muted">Session archive and profile are saved locally in this browser. Game capture, automatic telemetry, AI screen analysis and cloud video storage are not connected yet.</p></div></div>
+        <div class="page-heading"><div><div class="eyebrow">PREFERENCES</div><h1>Settings</h1><p class="muted">Tune how your engineer sounds and how race information is presented.</p></div></div>
+        <div class="settings-grid">
+          <div class="card"><h2>Engineer voice</h2>
+            <div class="field"><label for="voice-rate">VOICE SPEED</label><select id="voice-rate"><option value="0.9">Calm</option><option value="1.0">Measured</option><option value="1.15" selected>Standard</option><option value="1.3">Quick</option></select></div>
+            <div class="field"><label for="voice-choice">VOICE</label><select id="voice-choice"><option value="default">System default</option></select><p class="small muted">Available voices depend on your browser. More engineer voices will be added when the custom voice system is built.</p></div>
+            <div class="field"><label for="voice-enabled">VOICE OUTPUT</label><select id="voice-enabled"><option value="on" selected>Enabled</option><option value="off">Muted by default</option></select></div>
+            <div class="field"><label for="radio-style">RADIO STYLE</label><select id="radio-style"><option value="concise">Concise race calls</option><option value="balanced">Balanced detail</option><option value="detailed">Detailed explanations</option></select></div>
+          </div>
+          <div class="card"><h2>Race display</h2>
+            <div class="field"><label for="distance-units">DISTANCE UNITS</label><select id="distance-units"><option value="metric">Metric (km, litres, °C)</option><option value="imperial">Imperial (miles, gallons, °F)</option></select></div>
+            <div class="field"><label for="overlay-animation">RACE OVERLAYS</label><select id="overlay-animation"><option value="on">Animated pit and finish panels</option><option value="reduced">Reduced motion</option></select></div>
+            <div class="field"><label for="confirm-end">END SESSION CONFIRMATION</label><select id="confirm-end"><option value="on">Ask before ending</option><option value="off">End immediately</option></select></div>
+            <button class="primary" id="save-settings">Save settings</button><span id="settings-save-status" class="small muted" style="margin-left:10px" role="status"></span>
+          </div>
+          <div class="card"><h2>AI and connection status</h2><div class="status-line"><span class="status-dot"></span><div><strong>Interface online</strong><p class="small muted">The website UI is running locally in your browser.</p></div></div><div class="status-line"><span class="status-dot status-waiting"></span><div><strong>Custom race AI</strong><p class="small muted">Not connected yet. The future AI signal interface is being prepared; game detection and live telemetry are not active.</p></div></div><div class="status-line"><span class="status-dot status-waiting"></span><div><strong>Live voice conversation</strong><p class="small muted">Browser speech recognition may be used for a prototype call. A connected AI voice service is still a future integration.</p></div></div></div>
+        </div>
       </section>
       <section class="page hidden" id="page-engineer">
-        <div class="page-heading"><div><div class="eyebrow">TEAM RADIO / RACE CONTROL</div><h1 id="workspace-title">New race session</h1><p class="muted">Short, tactical calls. You stay focused on driving.</p></div><span class="tag">SESSION MODE</span></div>
-        <div class="flag-ribbon" id="flag-ribbon" aria-live="polite"><span class="flag-light"></span><span id="flag-ribbon-text">GREEN FLAG</span><span style="margin-left:auto;font-weight:500;letter-spacing:0">Condition shown from session status</span></div>
-        <div class="workspace-grid">
-          <div class="engineer-left">
-            <div class="card engineer-screen-card">
-              <div class="page-heading"><div><h2>Race screen</h2><span class="live-dot">● SESSION FEED</span></div></div>
-              <div class="video-placeholder" id="video-placeholder"><div class="empty-video"><div style="font-size:36px;margin-bottom:12px">▣</div><strong>No race video connected</strong><p class="small">Choose a video file below to preview it.<br>Automatic game capture and AI vision are not active yet.</p></div></div>
-              <input type="file" id="game-video" accept="video/*">
-              <div class="small muted" style="margin-top:7px">Local preview only; the video is not analysed or uploaded.</div>
+        <div class="page-heading engineer-heading"><div><div class="eyebrow">TEAM RADIO / RACE CONTROL</div><h1 id="workspace-title">New race session</h1><p class="muted">Keep your eyes on the track. Your engineer will keep the picture clear.</p></div><span class="tag">SESSION MODE</span></div>
+        <div class="flag-ribbon" id="flag-ribbon" aria-live="polite"><span class="flag-light"></span><span id="flag-ribbon-text">GREEN FLAG</span><span class="flag-ribbon-note" id="flag-ribbon-note">SESSION CONDITION</span></div>
+        <div class="engineer-layout">
+          <div class="card engineer-video-panel"><div class="panel-heading"><div><h2>Race feed</h2><span class="live-dot">● SESSION FEED</span></div><span class="tag">LOCAL PREVIEW</span></div>
+            <div class="video-placeholder" id="video-placeholder"><div class="empty-video"><div style="font-size:36px;margin-bottom:12px">▣</div><strong>No race video connected</strong><p class="small">Choose a video file to preview it.<br>Automatic game capture and AI vision are not active yet.</p></div></div>
+            <input type="file" id="game-video" accept="video/*"><div class="small muted" style="margin-top:7px">Local preview only; the video is not analysed or uploaded.</div>
+          </div>
+          <div class="card race-data-panel"><div class="panel-heading"><div><div class="eyebrow">LIVE RACE DATA</div><h2>Race picture</h2></div><span class="tag">4:3 DATA VIEW</span></div>
+            <div class="race-data-board" id="race-data-board">
+              <div class="data-hero-grid"><div class="data-hero"><div class="data-label">POSITION</div><div class="data-big" id="position-display">—</div><div class="data-caption">Overall</div></div><div class="data-hero"><div class="data-label">TIME LEFT</div><div class="data-big" id="time-display">20:00</div><div class="data-caption">Session clock</div></div></div>
+              <div class="data-stat-grid"><div class="data-stat"><span>FLAG</span><strong id="flag-display">GREEN</strong></div><div class="data-stat"><span>WEATHER</span><strong id="weather-display">Unknown</strong></div><div class="data-stat"><span>GAP AHEAD</span><strong id="gap-ahead-display">—</strong></div><div class="data-stat"><span>GAP BEHIND</span><strong id="gap-behind-display">—</strong></div><div class="data-stat"><span>BEST LAP</span><strong id="best-lap-display">—</strong></div><div class="data-stat"><span>TYRES</span><strong id="tyre-display">—</strong></div></div>
+              <div class="data-footnote"><span class="status-dot status-waiting"></span><span id="data-source-note">Waiting for race data. Values are manually entered or simulated until the AI connection is built.</span></div>
+              <div class="race-overlay hidden" id="pit-overlay" aria-live="assertive"><div class="overlay-kicker">PIT WALL STRATEGY</div><h2>IN PIT LANE</h2><p class="overlay-intro">Your engineer's current pit-stop picture</p><div class="overlay-stat-grid"><div><span>PROJECTED NET POSITION</span><strong id="pit-net-position">Calculating…</strong></div><div><span>REJOIN POSITION</span><strong id="pit-rejoin-position">Calculating…</strong></div><div><span>EST. PIT LOSS</span><strong id="pit-loss">—</strong></div><div><span>TYRE PLAN</span><strong id="pit-tyre-plan">—</strong></div><div class="wide"><span>TRAFFIC ON REJOIN</span><strong id="pit-traffic">Checking traffic window…</strong></div></div><p class="small muted">These are demo estimates, not live AI calculations.</p><button class="secondary" id="pit-overlay-close">Dismiss demo overlay</button></div>
+              <div class="race-overlay finish-overlay hidden" id="finish-overlay" aria-live="assertive"><div class="overlay-kicker">CHEQUERED FLAG</div><h2>SESSION COMPLETE</h2><p class="overlay-intro">Your race summary</p><div class="finish-position" id="finish-position">P—</div><div class="overlay-stat-grid"><div><span>POSITIONS GAINED</span><strong id="finish-gained">—</strong></div><div><span>FASTEST LAP</span><strong id="finish-fastest">—</strong></div><div><span>PIT STRATEGY</span><strong id="finish-strategy">—</strong></div><div><span>KEY MOMENTS</span><strong id="finish-events">0 logged</strong></div></div><p class="small muted">Review data will improve once real telemetry and AI analysis are connected.</p><button class="primary" id="finish-save-review">Save race review</button><button class="secondary" id="finish-overlay-close" style="margin-left:6px">Close</button></div>
             </div>
-            <div class="card engineer-status-card">
-              <div class="telemetry-grid">
-                <div class="telemetry"><div class="label">FLAG</div><div class="value" id="flag-display">GREEN</div></div>
-                <div class="telemetry"><div class="label">TIME LEFT</div><div class="value" id="time-display">20:00</div></div>
-                <div class="telemetry"><div class="label">POSITION</div><div class="value" id="position-display">—</div></div>
-              </div>
-              <div class="two-fields">
-                <div class="field"><label for="flag-select">FLAG CONDITION (MANUAL)</label><select id="flag-select"><option>Green</option><option>Yellow</option><option>Double yellow</option><option>Red</option><option>Blue</option><option>Chequered</option></select></div>
-                <div class="field"><label for="position-input">YOUR POSITION (OPTIONAL)</label><input id="position-input" type="number" min="1" max="99" placeholder="e.g. 8"></div>
-              </div>
-              <div class="two-fields">
-                <div class="field"><label for="minutes-input">TIME LEFT (MIN)</label><input id="minutes-input" type="number" min="0" max="999" value="20"></div>
-                <div class="field"><label for="seconds-input">SECONDS</label><input id="seconds-input" type="number" min="0" max="59" value="0"></div>
-              </div>
-              <button class="primary" id="update-status">Update status</button>
+            <div class="manual-data-fields"><div class="two-fields"><div class="field"><label for="flag-select">FLAG CONDITION</label><select id="flag-select"><option>Green</option><option>Yellow</option><option>Double yellow</option><option>Red</option><option>Blue</option><option>Chequered</option></select></div><div class="field"><label for="position-input">POSITION</label><input id="position-input" type="number" min="1" max="99" placeholder="e.g. 8"></div></div>
+              <div class="two-fields"><div class="field"><label for="minutes-input">TIME LEFT (MIN)</label><input id="minutes-input" type="number" min="0" max="999" value="20"></div><div class="field"><label for="seconds-input">SECONDS</label><input id="seconds-input" type="number" min="0" max="59" value="0"></div></div>
+              <div class="two-fields"><div class="field"><label for="weather-input">WEATHER</label><select id="weather-input"><option value="Unknown">Unknown</option><option>Dry</option><option>Light rain</option><option>Heavy rain</option><option>Changing</option></select></div><div class="field"><label for="tyre-input">TYRE COMPOUND</label><select id="tyre-input"><option value="—">Not set</option><option>Dry</option><option>Wet</option></select></div></div>
+              <div class="two-fields"><div class="field"><label for="gap-ahead-input">GAP AHEAD (SEC)</label><input id="gap-ahead-input" type="number" min="0" step="0.001" placeholder="e.g. 1.250"></div><div class="field"><label for="gap-behind-input">GAP BEHIND (SEC)</label><input id="gap-behind-input" type="number" min="0" step="0.001" placeholder="e.g. 0.850"></div></div>
+              <div class="two-fields"><div class="field"><label for="best-lap-input">BEST LAP</label><input id="best-lap-input" placeholder="e.g. 1:48.235" maxlength="20"></div><div class="field"><label for="pit-loss-input">EST. PIT LOSS (SEC)</label><input id="pit-loss-input" type="number" min="0" step="0.1" value="25"></div></div>
+              <button class="primary" id="update-status">Update race data</button><div class="demo-actions"><span class="small muted">Preview the overlays:</span><button class="secondary" id="demo-pit">Demo pit stop</button><button class="secondary" id="demo-finish">Demo chequered flag</button></div>
             </div>
           </div>
-          <div class="engineer-right">
-            <div class="card radio-box">
-              <div class="page-heading"><div><h2>Team radio</h2><p class="small muted">Your engineer chat · scrolls independently</p></div><span class="tag">LOCAL</span></div>
-              <div class="radio-messages" id="radio-messages" aria-live="polite"><div class="message engineer"><span class="sender">PITWALL ENGINEER</span>Radio check. Enter your current situation, driver.</div></div>
-              <form class="radio-form" id="radio-form"><input id="radio-input" maxlength="400" placeholder="Tell your engineer what is happening…" required><button class="primary" type="submit">Send</button></form>
-              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="secondary" id="speak-last">🔊 Speak last call</button><button class="secondary" id="stop-speech">■ Stop voice</button><button class="secondary" id="save-session">Save session</button><button class="secondary" id="end-session">End session</button></div>
-              <p class="footer-note">Voice uses your browser's speech feature. Replies are currently local rules, not a connected AI model. Live video and automatic flag detection are future integrations.</p>
-            </div>
+          <div class="card engineer-call-panel"><div class="call-header"><div class="call-avatar">PW</div><div><div class="eyebrow">ENGINEER CHANNEL</div><h2 id="call-state-title">Ready to connect</h2><p class="small muted" id="call-state-subtitle">Voice call prototype</p></div><span class="call-live-dot" id="call-live-dot"></span></div>
+            <div class="call-wave" id="call-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="call-transcript" id="radio-messages" aria-live="polite"><div class="message engineer"><span class="sender">PITWALL ENGINEER</span>Radio check. Tap Connect to start the browser voice prototype.</div></div>
+            <div class="last-call-box"><div class="small muted">LAST ENGINEER CALL</div><p id="last-call-text">Radio check. Stay focused. Give me your race situation.</p></div>
+            <div class="call-controls"><button class="primary call-connect" id="call-connect">☎ Connect</button><button class="secondary" id="mute-mic" aria-pressed="false" disabled>🎙 Mute mic</button><button class="secondary" id="save-session">Save session</button><button class="secondary danger-button" id="end-session">End session</button></div>
+            <div class="call-state-note small muted" id="call-state-note">The prototype uses browser speech recognition and speech synthesis where supported. It is not yet connected to a custom AI model.</div>
           </div>
         </div>
       </section>
@@ -366,6 +456,10 @@ h3 { font-size:14px; }
   let currentGameUrl = null;
   let lastEngineerMessage = "Radio check. Stay focused. Give me your race situation.";
   let sessionStart = Date.now();
+  let recognition = null;
+  let callConnected = false;
+  let micMuted = false;
+  let lastPitDemoAt = null;
 
   function makeId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
@@ -442,7 +536,7 @@ h3 { font-size:14px; }
       game:"Assetto Corsa Competizione", track:"Not set",
       created:Date.now(), updated:Date.now(), fuel:null,
       fuelPerLap:null, lapsRemaining:null, flag:"Green", position:null,
-      timeSeconds:1200, events:[], messages:[]
+      timeSeconds:1200, weather:"Unknown", gapAhead:null, gapBehind:null, bestLap:"", tyre:"—", pitLoss:25, events:[], messages:[]
     };
     sessions.unshift(s);
     activeSessionId = s.id;
@@ -453,7 +547,10 @@ h3 { font-size:14px; }
     $("minutes-input").value = "20";
     $("seconds-input").value = "0";
     $("radio-messages").replaceChildren();
-    addMessage("PITWALL ENGINEER","Radio check. Give me your situation, driver.");
+    $("pit-overlay").classList.add("hidden"); $("finish-overlay").classList.add("hidden");
+    $("weather-input").value = "Unknown"; $("gap-ahead-input").value = ""; $("gap-behind-input").value = ""; $("best-lap-input").value = ""; $("tyre-input").value = "—"; $("pit-loss-input").value = "25";
+    micMuted = false; $("mute-mic").textContent = "🎙 Mute mic"; callStatus(false);
+    addMessage("PITWALL ENGINEER","Radio check. Tap Connect to start the browser voice prototype.");
     saveAll();
     page("engineer");
     renderDashboard();
@@ -467,6 +564,12 @@ h3 { font-size:14px; }
     $("position-input").value = s.position ?? "";
     $("minutes-input").value = Math.floor((s.timeSeconds ?? 1200)/60);
     $("seconds-input").value = (s.timeSeconds ?? 1200)%60;
+    $("weather-input").value = s.weather || "Unknown";
+    $("gap-ahead-input").value = s.gapAhead ?? "";
+    $("gap-behind-input").value = s.gapBehind ?? "";
+    $("best-lap-input").value = s.bestLap || "";
+    $("tyre-input").value = s.tyre || "—";
+    $("pit-loss-input").value = s.pitLoss ?? 25;
     $("radio-messages").replaceChildren();
     if (s.messages && s.messages.length) {
       s.messages.forEach(m => addMessage(m.sender,m.text));
@@ -518,7 +621,13 @@ h3 { font-size:14px; }
     const secs = Math.max(0,Math.floor(s.timeSeconds ?? 1200));
     $("time-display").textContent = String(Math.floor(secs/60)).padStart(2,"0")+":"+String(secs%60).padStart(2,"0");
     $("position-display").textContent = s.position ? "P"+s.position : "—";
+    $("weather-display").textContent = s.weather || "Unknown";
+    $("gap-ahead-display").textContent = s.gapAhead == null || s.gapAhead === "" ? "—" : Number(s.gapAhead).toFixed(3)+"s";
+    $("gap-behind-display").textContent = s.gapBehind == null || s.gapBehind === "" ? "—" : Number(s.gapBehind).toFixed(3)+"s";
+    $("best-lap-display").textContent = s.bestLap || "—";
+    $("tyre-display").textContent = s.tyre || "—";
     updateFlagRibbon();
+    if ((s.flag || "").toLowerCase() === "chequered") showFinishOverlay();
   }
   function updateFlagRibbon() {
     const flag = ($("flag-select")?.value || activeSession()?.flag || "Green").toLowerCase();
@@ -529,6 +638,7 @@ h3 { font-size:14px; }
     $("flag-ribbon-text").textContent = flag.toUpperCase() + " FLAG";
     const s = activeSession();
     if (s) s.flag = $("flag-select").value || s.flag;
+    const note = $("flag-ribbon-note"); if (note) note.textContent = flag === "chequered" ? "SESSION COMPLETE" : "SESSION CONDITION";
   }
   function engineerReply(input) {
     const text = input.toLowerCase();
@@ -591,33 +701,120 @@ h3 { font-size:14px; }
     const reply = engineerReply(text.trim());
     addMessage("PITWALL ENGINEER",reply);
     saveMessage("PITWALL ENGINEER",reply);
-    lastEngineerMessage = reply;
+    updateLastCall(reply);
   }
   function speak(text) {
-    if (!("speechSynthesis" in window)) {
-      alert("Speech synthesis is not supported by this browser.");
-      return;
-    }
+    if (!("speechSynthesis" in window)) { return; }
     window.speechSynthesis.cancel();
-    const settings = safeRead("pitwall-ai-settings-v1:" + (currentUser?.id || "guest"), {});
+    const settings = currentSettings();
     if (settings.voiceEnabled === "off") return;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = Number(settings.voiceRate || 1.15);
     utterance.pitch = 0.9;
+    const voices = window.speechSynthesis.getVoices();
+    const chosen = voices.find(v => v.name === settings.voiceName);
+    if (chosen) utterance.voice = chosen;
     window.speechSynthesis.speak(utterance);
+  }
+
+  function currentSettings() { return safeRead("pitwall-ai-settings-v1:" + (currentUser?.id || "guest"), {}); }
+  function updateLastCall(text) { lastEngineerMessage = text; const el = $("last-call-text"); if (el) el.textContent = text; }
+  function callStatus(connected, message) {
+    callConnected = connected;
+    $("call-connect").classList.toggle("connected", connected);
+    $("call-connect").textContent = connected ? "☎ Disconnect" : "☎ Connect";
+    $("mute-mic").disabled = !connected;
+    $("call-state-title").textContent = connected ? "Call connected" : "Ready to connect";
+    $("call-state-subtitle").textContent = connected ? (micMuted ? "Microphone muted" : "Listening for your voice") : "Voice call prototype";
+    $("call-live-dot").classList.toggle("connected", connected);
+    $("call-wave").classList.toggle("active", connected && !micMuted);
+    $("call-state-note").textContent = message || (connected ? "Speak naturally. Your browser will try to transcribe your voice; responses are local prototype rules, not a connected AI model." : "The prototype uses browser speech recognition and speech synthesis where supported. It is not yet connected to a custom AI model.");
+  }
+  function stopRecognition() { if (recognition) { try { recognition.onend = null; recognition.stop(); } catch {} recognition = null; } }
+  function startVoiceCall() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) { callStatus(false, "Voice recognition is not supported in this browser. The call interface is ready, but use a browser with SpeechRecognition support to test microphone input."); return; }
+    stopRecognition();
+    recognition = new SpeechRecognition();
+    recognition.continuous = true; recognition.interimResults = false; recognition.lang = "en-GB";
+    recognition.onresult = event => {
+      if (!callConnected || micMuted) return;
+      const result = event.results[event.results.length - 1];
+      if (!result.isFinal) return;
+      const transcript = result[0].transcript.trim();
+      if (!transcript) return;
+      sendRadio(transcript);
+      const reply = engineerReply(transcript);
+      updateLastCall(reply);
+      if (currentSettings().voiceEnabled !== "off") speak(reply);
+    };
+    recognition.onerror = event => { if (event.error === "not-allowed" || event.error === "service-not-allowed") callStatus(false, "Microphone permission was blocked. Allow microphone access in your browser and reconnect."); };
+    recognition.onend = () => { if (callConnected && !micMuted && recognition) { try { recognition.start(); } catch {} } };
+    try { recognition.start(); callStatus(true); addMessage("PITWALL ENGINEER", "Voice channel open. Give me your situation when you're ready."); updateLastCall("Voice channel open. Give me your situation when you're ready."); }
+    catch { callStatus(false, "Could not start microphone recognition. Check browser microphone permission and try again."); }
+  }
+  function showPitOverlay() {
+    const s = activeSession(); if (!s) return;
+    lastPitDemoAt = Date.now();
+    const pos = Number(s.position || 8);
+    const loss = Number(s.pitLoss ?? 25);
+    $("pit-net-position").textContent = "P" + Math.min(99,pos+2) + "–P" + Math.min(99,pos+4);
+    $("pit-rejoin-position").textContent = "P" + Math.min(99,pos+3);
+    $("pit-loss").textContent = loss.toFixed(1) + " sec";
+    $("pit-tyre-plan").textContent = s.tyre && s.tyre !== "—" ? s.tyre + " tyres" : "Review conditions";
+    $("pit-traffic").textContent = s.gapBehind != null && s.gapBehind !== "" && Number(s.gapBehind) < 2 ? "Traffic close behind — rejoin carefully" : "Rejoin window needs live traffic data";
+    $("pit-overlay").classList.remove("hidden"); $("finish-overlay").classList.add("hidden");
+    addEvent("Pit stop overlay", "Pit strategy overlay shown (demo estimates)");
+  }
+  function showFinishOverlay() {
+    const s = activeSession(); if (!s || !( $("finish-overlay") )) return;
+    $("finish-position").textContent = s.position ? "P" + s.position : "POSITION UNKNOWN";
+    $("finish-gained").textContent = "Awaiting start position";
+    $("finish-fastest").textContent = s.bestLap || "Not recorded";
+    $("finish-strategy").textContent = s.tyre && s.tyre !== "—" ? s.tyre + " tyres" : "Not recorded";
+    $("finish-events").textContent = (s.events || []).length + " logged";
+    $("finish-overlay").classList.remove("hidden"); $("pit-overlay").classList.add("hidden");
+    updateLastCall("Chequered flag. Session complete. Save the session to keep your race review.");
   }
 
   function loadProfile() {
     const profile = safeRead(PROFILE_KEY, {});
     $("profile-name").value = profile.name || (currentUser?.user_metadata?.driver_name || "");
     $("profile-number").value = profile.number ?? "";
+    $("profile-nationality").value = profile.nationality || "";
+    $("profile-team").value = profile.team || "";
     $("profile-game").value = profile.game || "Assetto Corsa Competizione";
+    $("profile-colour").value = profile.colour || "#00e5d4";
     $("profile-email").textContent = currentUser?.email || "—";
+    updateProfilePreview();
+  }
+  function updateProfilePreview() {
+    const name = $("profile-name")?.value.trim() || "YOUR NAME";
+    const number = $("profile-number")?.value || "88";
+    const team = $("profile-team")?.value.trim() || "YOUR TEAM";
+    const colour = $("profile-colour")?.value || "#00e5d4";
+    $("profile-preview-name").textContent = name.toUpperCase();
+    $("profile-preview-number").textContent = number;
+    $("profile-preview-team").textContent = team.toUpperCase();
+    $("profile-preview").style.borderLeftColor = colour;
+    $("profile-preview-number").style.color = colour;
   }
   function loadSettings() {
-    const settings = safeRead("pitwall-ai-settings-v1:" + (currentUser?.id || "guest"), {});
+    const settings = currentSettings();
     $("voice-rate").value = String(settings.voiceRate || 1.15);
     $("voice-enabled").value = settings.voiceEnabled || "on";
+    $("radio-style").value = settings.radioStyle || "concise";
+    $("distance-units").value = settings.distanceUnits || "metric";
+    $("overlay-animation").value = settings.overlayAnimation || "on";
+    $("confirm-end").value = settings.confirmEnd || "on";
+    const voiceSelect = $("voice-choice");
+    if (voiceSelect && "speechSynthesis" in window) {
+      const selected = settings.voiceName || "default";
+      const voices = window.speechSynthesis.getVoices();
+      voiceSelect.replaceChildren(new Option("System default", "default"));
+      voices.forEach((voice, i) => voiceSelect.add(new Option(voice.name + (voice.lang ? " · " + voice.lang : ""), voice.name)));
+      voiceSelect.value = voices.some(v => v.name === selected) ? selected : "default";
+    }
   }
 
   function showAuthMessage(message, isError=false) {
@@ -802,6 +999,12 @@ h3 { font-size:14px; }
     const pos = $("position-input").value;
     s.position = pos === "" ? null : Number(pos);
     s.timeSeconds = Math.max(0,Number($("minutes-input").value || 0)*60+Number($("seconds-input").value || 0));
+    s.weather = $("weather-input").value;
+    s.gapAhead = $("gap-ahead-input").value === "" ? null : Number($("gap-ahead-input").value);
+    s.gapBehind = $("gap-behind-input").value === "" ? null : Number($("gap-behind-input").value);
+    s.bestLap = $("best-lap-input").value.trim();
+    s.tyre = $("tyre-input").value;
+    s.pitLoss = Math.max(0,Number($("pit-loss-input").value || 25));
     s.updated = Date.now();
     saveAll();
     renderStatus();
@@ -816,15 +1019,23 @@ h3 { font-size:14px; }
     addMessage("PITWALL ENGINEER",reply);
     saveMessage("PITWALL ENGINEER",reply);
   });
-  $("radio-form").addEventListener("submit",event => {
-    event.preventDefault();
-    const input = $("radio-input");
-    sendRadio(input.value);
-    input.value = "";
-    input.focus();
+  $("call-connect").addEventListener("click", () => {
+    if (callConnected) { callStatus(false, "Voice channel disconnected."); stopRecognition(); window.speechSynthesis?.cancel(); }
+    else startVoiceCall();
   });
-  $("speak-last").addEventListener("click",() => speak(lastEngineerMessage));
-  $("stop-speech").addEventListener("click",() => window.speechSynthesis?.cancel());
+  $("mute-mic").addEventListener("click", () => {
+    micMuted = !micMuted;
+    $("mute-mic").textContent = micMuted ? "🎙 Unmute mic" : "🎙 Mute mic";
+    $("mute-mic").setAttribute("aria-pressed", String(micMuted));
+    if (micMuted) stopRecognition();
+    else if (callConnected) startVoiceCall();
+    callStatus(callConnected, micMuted ? "Microphone muted. The engineer will not listen until you unmute." : undefined);
+  });
+  $("demo-pit").addEventListener("click", showPitOverlay);
+  $("demo-finish").addEventListener("click", showFinishOverlay);
+  $("pit-overlay-close").addEventListener("click", () => $("pit-overlay").classList.add("hidden"));
+  $("finish-overlay-close").addEventListener("click", () => $("finish-overlay").classList.add("hidden"));
+  $("finish-save-review").addEventListener("click", () => { const s=activeSession(); if(s){s.updated=Date.now();addEvent("Race review saved","Chequered-flag summary reviewed");saveAll();} $("finish-overlay").classList.add("hidden"); });
   $("save-session").addEventListener("click",() => {
     const s = activeSession();
     if (!s) { alert("Start a session first."); return; }
@@ -832,27 +1043,37 @@ h3 { font-size:14px; }
     s.updated = Date.now();
     saveAll();
     renderDashboard();
-    renderDashboard();
-    page("dashboard");
+    $("call-state-note").textContent = "Session saved locally. The engineer call remains open.";
+    addEvent("Session saved", "Session saved from the engineer screen");
   });
   $("end-session").addEventListener("click",() => {
     const s = activeSession();
-    if (s) { s.updated = Date.now(); saveAll(); }
+    if (s) {
+      const confirmEnd = currentSettings().confirmEnd !== "off";
+      if (confirmEnd && !window.confirm("End this session and return to Overview? Your saved session will remain in the archive.")) return;
+      s.updated = Date.now(); saveAll();
+    }
+    stopRecognition(); callStatus(false); window.speechSynthesis?.cancel();
     activeSessionId = null;
     renderDashboard();
     page("dashboard");
   });
+  ["profile-name","profile-number","profile-team","profile-colour"].forEach(id => $(id).addEventListener("input", updateProfilePreview));
   $("save-profile").addEventListener("click",() => {
-    const profile = {name:$("profile-name").value.trim(),number:$("profile-number").value === "" ? null : Number($("profile-number").value),game:$("profile-game").value.trim() || "Assetto Corsa Competizione"};
-    safeWrite(PROFILE_KEY,profile);
+    const profile = {name:$("profile-name").value.trim(),number:$("profile-number").value === "" ? null : Number($("profile-number").value),nationality:$("profile-nationality").value.trim(),team:$("profile-team").value.trim(),game:$("profile-game").value.trim() || "Assetto Corsa Competizione",colour:$("profile-colour").value};
+    const ok = safeWrite(PROFILE_KEY,profile);
     if (currentUser && profile.name) supabaseClient?.auth.updateUser({data:{driver_name:profile.name}}).catch(()=>{});
     if (profile.name) $("welcome-name").textContent = profile.name;
-    alert("Profile saved on this device.");
+    $("profile-save-status").textContent = ok ? "Saved on this device." : "Could not save.";
+    updateProfilePreview();
   });
   $("save-settings").addEventListener("click",() => {
-    safeWrite("pitwall-ai-settings-v1:" + (currentUser?.id || "guest"),{voiceRate:Number($("voice-rate").value),voiceEnabled:$("voice-enabled").value});
-    alert("Settings saved.");
+    const settings = {voiceRate:Number($("voice-rate").value),voiceEnabled:$("voice-enabled").value,voiceName:$("voice-choice").value,radioStyle:$("radio-style").value,distanceUnits:$("distance-units").value,overlayAnimation:$("overlay-animation").value,confirmEnd:$("confirm-end").value};
+    const ok = safeWrite("pitwall-ai-settings-v1:" + (currentUser?.id || "guest"),settings);
+    $("settings-save-status").textContent = ok ? "Settings saved." : "Could not save settings.";
   });
+  if ("speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = () => { if (!( $("page-settings") ).classList.contains("hidden")) loadSettings(); };
+
   $("game-video").addEventListener("change",event => {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
