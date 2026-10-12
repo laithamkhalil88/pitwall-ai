@@ -227,7 +227,7 @@ h3 { font-size:14px; }
 .data-footnote { display:flex; align-items:flex-start; gap:7px; margin-top:10px; font-size:10px; color:var(--muted); line-height:1.4; }
 .status-dot { display:inline-block; flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#26d07c; box-shadow:0 0 8px #26d07c; margin-top:3px; }
 .status-waiting { background:#d9a441; box-shadow:0 0 7px rgba(217,164,65,.45); }
-.manual-data-fields { padding-top:14px; }
+.manual-data-fields { display:none; padding-top:14px; }
 .manual-data-fields .field { margin-bottom:10px; }
 .manual-data-fields .two-fields { gap:8px; }
 .demo-actions { display:flex; gap:7px; align-items:center; flex-wrap:wrap; margin-top:10px; }
@@ -356,7 +356,7 @@ h3 { font-size:14px; }
         </div>
         <div class="dashboard-grid">
           <div class="card"><div class="page-heading"><div><h2>Recent sessions</h2><p class="small muted">Pick up where you left off.</p></div><button class="secondary" data-goto="sessions">View all</button></div><div id="recent-sessions"></div></div>
-          <div class="card"><h2>Start a session</h2><p class="muted small">Open your race engineer workspace from here. The engineer screen stays locked away until you start or open a session.</p><div class="clip-art" style="height:145px"><span>88</span></div><button class="primary" id="quick-start" style="width:100%">Start race engineer →</button><p class="footer-note">Game video analysis and automatic flag detection are not connected yet; current status fields are manual.</p></div>
+          <div class="card"><h2>Start a session</h2><p class="muted small">Open your race engineer workspace from here. The engineer screen stays locked away until you start or open a session.</p><div class="clip-art" style="height:145px"><span>88</span></div><button class="primary" id="quick-start" style="width:100%">Start race engineer →</button><p class="footer-note">Wear headphones for the clearest radio audio. Capture-card analysis will activate when the race-vision AI is connected.</p></div>
         </div>
       </section>
 
@@ -372,7 +372,6 @@ h3 { font-size:14px; }
             <div class="field"><label for="profile-name">DRIVER NAME</label><input id="profile-name" maxlength="60" placeholder="Your racing name"></div>
             <div class="two-fields"><div class="field"><label for="profile-number">RACE NUMBER</label><input id="profile-number" type="number" min="0" max="999" placeholder="88"></div><div class="field"><label for="profile-nationality">NATIONALITY</label><input id="profile-nationality" maxlength="40" placeholder="e.g. British"></div></div>
             <div class="field"><label for="profile-team">TEAM NAME</label><input id="profile-team" maxlength="60" placeholder="Your team"></div>
-            <div class="field"><label for="profile-game">PRIMARY GAME</label><input id="profile-game" value="Assetto Corsa Competizione" maxlength="80"></div>
             <div class="field"><label for="profile-colour">ACCENT COLOUR</label><select id="profile-colour"><option value="#00e5d4">PITWALL Turquoise</option><option value="#cef409">Neon yellow</option><option value="#a78bfa">Violet</option><option value="#ff6b9a">Pink</option><option value="#60a5fa">Blue</option></select></div>
             <button class="primary" id="save-profile">Save profile</button><span id="profile-save-status" class="small muted" style="margin-left:10px" role="status"></span>
           </div>
@@ -388,8 +387,12 @@ h3 { font-size:14px; }
             <div class="field"><label for="voice-enabled">VOICE OUTPUT</label><select id="voice-enabled"><option value="on" selected>Enabled</option><option value="off">Muted by default</option></select></div>
             <div class="field"><label for="radio-style">RADIO STYLE</label><select id="radio-style"><option value="concise">Concise race calls</option><option value="balanced">Balanced detail</option><option value="detailed">Detailed explanations</option></select></div>
           </div>
-          <div class="card"><h2>Race display</h2>
-            <div class="field"><label for="distance-units">DISTANCE UNITS</label><select id="distance-units"><option value="metric">Metric (km, litres, °C)</option><option value="imperial">Imperial (miles, gallons, °F)</option></select></div>
+          <div class="card"><h2>Language & units</h2>
+            <div class="field"><label for="ui-language">LANGUAGE</label><select id="ui-language"><option value="en-GB">English (UK)</option><option value="en-US">English (US)</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="it">Italiano</option><option value="es">Español</option></select><p class="small muted">Language preference is saved. Full translation of every screen will be added as localisation is built.</p></div>
+            <div class="two-fields"><div class="field"><label for="distance-unit">DISTANCE</label><select id="distance-unit"><option value="km">Kilometres (km)</option><option value="mi">Miles (mi)</option></select></div><div class="field"><label for="speed-unit">SPEED</label><select id="speed-unit"><option value="kmh">Kilometres per hour (km/h)</option><option value="mph">Miles per hour (mph)</option></select></div></div>
+            <div class="two-fields"><div class="field"><label for="temperature-unit">TEMPERATURE</label><select id="temperature-unit"><option value="c">Celsius (°C)</option><option value="f">Fahrenheit (°F)</option></select></div><div class="field"><label for="fuel-unit">FUEL VOLUME</label><select id="fuel-unit"><option value="l">Litres (L)</option><option value="us-gal">US gallons (US gal)</option><option value="uk-gal">Imperial gallons (UK gal)</option></select></div></div>
+            <div class="field"><label for="pressure-unit">TYRE PRESSURE</label><select id="pressure-unit"><option value="psi">PSI</option><option value="kpa">Kilopascals (kPa)</option><option value="bar">Bar</option></select></div>
+            <div class="divider-line"></div>
             <div class="field"><label for="overlay-animation">RACE OVERLAYS</label><select id="overlay-animation"><option value="on">Animated pit and finish panels</option><option value="reduced">Reduced motion</option></select></div>
             <div class="field"><label for="confirm-end">END SESSION CONFIRMATION</label><select id="confirm-end"><option value="on">Ask before ending</option><option value="off">End immediately</option></select></div>
             <button class="primary" id="save-settings">Save settings</button><span id="settings-save-status" class="small muted" style="margin-left:10px" role="status"></span>
@@ -402,14 +405,16 @@ h3 { font-size:14px; }
         <div class="flag-ribbon" id="flag-ribbon" aria-live="polite"><span class="flag-light"></span><span id="flag-ribbon-text">GREEN FLAG</span><span class="flag-ribbon-note" id="flag-ribbon-note">SESSION CONDITION</span></div>
         <div class="engineer-layout">
           <div class="card engineer-video-panel"><div class="panel-heading"><div><h2>Race feed</h2><span class="live-dot">● SESSION FEED</span></div><span class="tag">LOCAL PREVIEW</span></div>
-            <div class="video-placeholder" id="video-placeholder"><div class="empty-video"><div style="font-size:36px;margin-bottom:12px">▣</div><strong>No race video connected</strong><p class="small">Choose a video file to preview it.<br>Automatic game capture and AI vision are not active yet.</p></div></div>
-            <input type="file" id="game-video" accept="video/*"><div class="small muted" style="margin-top:7px">Local preview only; the video is not analysed or uploaded.</div>
+            <div class="video-placeholder" id="video-placeholder"><div class="empty-video"><div style="font-size:36px;margin-bottom:12px">▣</div><strong>No capture input connected</strong><p class="small">Connect your capture card, then choose an available video input.</p></div></div>
+            <div class="field" style="margin-top:12px"><label for="capture-input-select">AVAILABLE VIDEO INPUTS</label><select id="capture-input-select"><option value="">Choose input to scan devices…</option></select></div>
+            <div class="two-fields"><button class="secondary" id="scan-inputs">Choose input / Refresh list</button><button class="primary" id="connect-input">Connect input</button></div>
+            <div class="small muted" id="input-status" style="margin-top:8px" role="status">Your browser will list camera and capture-card inputs it can access. A connected feed is not analysed by AI until the vision model is integrated.</div>
           </div>
           <div class="card race-data-panel"><div class="panel-heading"><div><div class="eyebrow">LIVE RACE DATA</div><h2>Race picture</h2></div><span class="tag">4:3 DATA VIEW</span></div>
             <div class="race-data-board" id="race-data-board">
               <div class="data-hero-grid"><div class="data-hero"><div class="data-label">POSITION</div><div class="data-big" id="position-display">—</div><div class="data-caption">Overall</div></div><div class="data-hero"><div class="data-label">TIME LEFT</div><div class="data-big" id="time-display">20:00</div><div class="data-caption">Session clock</div></div></div>
               <div class="data-stat-grid"><div class="data-stat"><span>FLAG</span><strong id="flag-display">GREEN</strong></div><div class="data-stat"><span>WEATHER</span><strong id="weather-display">Unknown</strong></div><div class="data-stat"><span>GAP AHEAD</span><strong id="gap-ahead-display">—</strong></div><div class="data-stat"><span>GAP BEHIND</span><strong id="gap-behind-display">—</strong></div><div class="data-stat"><span>BEST LAP</span><strong id="best-lap-display">—</strong></div><div class="data-stat"><span>TYRES</span><strong id="tyre-display">—</strong></div></div>
-              <div class="data-footnote"><span class="status-dot status-waiting"></span><span id="data-source-note">Waiting for race data. Values are manually entered or simulated until the AI connection is built.</span></div>
+              <div class="data-footnote"><span class="status-dot status-waiting"></span><span id="data-source-note">Waiting for capture input and race-vision AI. Data will appear here when visual analysis is connected.</span></div>
               <div class="race-overlay hidden" id="pit-overlay" aria-live="assertive"><div class="overlay-kicker">PIT WALL STRATEGY</div><h2>IN PIT LANE</h2><p class="overlay-intro">Your engineer's current pit-stop picture</p><div class="overlay-stat-grid"><div><span>PROJECTED NET POSITION</span><strong id="pit-net-position">Calculating…</strong></div><div><span>REJOIN POSITION</span><strong id="pit-rejoin-position">Calculating…</strong></div><div><span>EST. PIT LOSS</span><strong id="pit-loss">—</strong></div><div><span>TYRE PLAN</span><strong id="pit-tyre-plan">—</strong></div><div class="wide"><span>TRAFFIC ON REJOIN</span><strong id="pit-traffic">Checking traffic window…</strong></div></div><p class="small muted">These are demo estimates, not live AI calculations.</p><button class="secondary" id="pit-overlay-close">Dismiss demo overlay</button></div>
               <div class="race-overlay finish-overlay hidden" id="finish-overlay" aria-live="assertive"><div class="overlay-kicker">CHEQUERED FLAG</div><h2>SESSION COMPLETE</h2><p class="overlay-intro">Your race summary</p><div class="finish-position" id="finish-position">P—</div><div class="overlay-stat-grid"><div><span>POSITIONS GAINED</span><strong id="finish-gained">—</strong></div><div><span>FASTEST LAP</span><strong id="finish-fastest">—</strong></div><div><span>PIT STRATEGY</span><strong id="finish-strategy">—</strong></div><div><span>KEY MOMENTS</span><strong id="finish-events">0 logged</strong></div></div><p class="small muted">Review data will improve once real telemetry and AI analysis are connected.</p><button class="primary" id="finish-save-review">Save race review</button><button class="secondary" id="finish-overlay-close" style="margin-left:6px">Close</button></div>
             </div>
@@ -454,6 +459,7 @@ h3 { font-size:14px; }
   let sessions = [];
   let activeSessionId = null;
   let currentGameUrl = null;
+  let currentInputStream = null;
   let lastEngineerMessage = "Radio check. Stay focused. Give me your race situation.";
   let sessionStart = Date.now();
   let recognition = null;
@@ -531,8 +537,13 @@ h3 { font-size:14px; }
     return ok;
   }
   function startSession() {
+    const enteredName = window.prompt("What would you like to name this session?", "ACC Session " + (sessions.length + 1));
+    if (enteredName === null) return;
+    const sessionName = enteredName.trim();
+    if (!sessionName) { alert("Please enter a session name to continue."); return; }
+    if (!window.confirm("Headphones are recommended so you can hear the engineer clearly and avoid audio feedback. Put them on before continuing. Ready to start?")) return;
     const s = {
-      id:makeId(), title:"ACC Session " + (sessions.length + 1),
+      id:makeId(), title:sessionName,
       game:"Assetto Corsa Competizione", track:"Not set",
       created:Date.now(), updated:Date.now(), fuel:null,
       fuelPerLap:null, lapsRemaining:null, flag:"Green", position:null,
@@ -783,7 +794,6 @@ h3 { font-size:14px; }
     $("profile-number").value = profile.number ?? "";
     $("profile-nationality").value = profile.nationality || "";
     $("profile-team").value = profile.team || "";
-    $("profile-game").value = profile.game || "Assetto Corsa Competizione";
     $("profile-colour").value = profile.colour || "#00e5d4";
     $("profile-email").textContent = currentUser?.email || "—";
     updateProfilePreview();
@@ -804,7 +814,12 @@ h3 { font-size:14px; }
     $("voice-rate").value = String(settings.voiceRate || 1.15);
     $("voice-enabled").value = settings.voiceEnabled || "on";
     $("radio-style").value = settings.radioStyle || "concise";
-    $("distance-units").value = settings.distanceUnits || "metric";
+    $("ui-language").value = settings.language || "en-GB";
+    $("distance-unit").value = settings.distanceUnit || "km";
+    $("speed-unit").value = settings.speedUnit || "kmh";
+    $("temperature-unit").value = settings.temperatureUnit || "c";
+    $("fuel-unit").value = settings.fuelUnit || "l";
+    $("pressure-unit").value = settings.pressureUnit || "psi";
     $("overlay-animation").value = settings.overlayAnimation || "on";
     $("confirm-end").value = settings.confirmEnd || "on";
     const voiceSelect = $("voice-choice");
@@ -1054,13 +1069,14 @@ h3 { font-size:14px; }
       s.updated = Date.now(); saveAll();
     }
     stopRecognition(); callStatus(false); window.speechSynthesis?.cancel();
+    if (currentInputStream) { currentInputStream.getTracks().forEach(track => track.stop()); currentInputStream = null; }
     activeSessionId = null;
     renderDashboard();
     page("dashboard");
   });
   ["profile-name","profile-number","profile-team","profile-colour"].forEach(id => $(id).addEventListener("input", updateProfilePreview));
   $("save-profile").addEventListener("click",() => {
-    const profile = {name:$("profile-name").value.trim(),number:$("profile-number").value === "" ? null : Number($("profile-number").value),nationality:$("profile-nationality").value.trim(),team:$("profile-team").value.trim(),game:$("profile-game").value.trim() || "Assetto Corsa Competizione",colour:$("profile-colour").value};
+    const profile = {name:$("profile-name").value.trim(),number:$("profile-number").value === "" ? null : Number($("profile-number").value),nationality:$("profile-nationality").value.trim(),team:$("profile-team").value.trim(),colour:$("profile-colour").value};
     const ok = safeWrite(PROFILE_KEY,profile);
     if (currentUser && profile.name) supabaseClient?.auth.updateUser({data:{driver_name:profile.name}}).catch(()=>{});
     if (profile.name) $("welcome-name").textContent = profile.name;
@@ -1068,30 +1084,65 @@ h3 { font-size:14px; }
     updateProfilePreview();
   });
   $("save-settings").addEventListener("click",() => {
-    const settings = {voiceRate:Number($("voice-rate").value),voiceEnabled:$("voice-enabled").value,voiceName:$("voice-choice").value,radioStyle:$("radio-style").value,distanceUnits:$("distance-units").value,overlayAnimation:$("overlay-animation").value,confirmEnd:$("confirm-end").value};
+    const settings = {voiceRate:Number($("voice-rate").value),voiceEnabled:$("voice-enabled").value,voiceName:$("voice-choice").value,radioStyle:$("radio-style").value,language:$("ui-language").value,distanceUnit:$("distance-unit").value,speedUnit:$("speed-unit").value,temperatureUnit:$("temperature-unit").value,fuelUnit:$("fuel-unit").value,pressureUnit:$("pressure-unit").value,overlayAnimation:$("overlay-animation").value,confirmEnd:$("confirm-end").value};
     const ok = safeWrite("pitwall-ai-settings-v1:" + (currentUser?.id || "guest"),settings);
     $("settings-save-status").textContent = ok ? "Settings saved." : "Could not save settings.";
   });
   if ("speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = () => { if (!( $("page-settings") ).classList.contains("hidden")) loadSettings(); };
 
-  $("game-video").addEventListener("change",event => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
-    if (currentGameUrl) URL.revokeObjectURL(currentGameUrl);
-    currentGameUrl = URL.createObjectURL(file);
-    const overviewVideo = $("overview-race-video");
-    if (overviewVideo) { overviewVideo.src = currentGameUrl; overviewVideo.classList.remove("hidden"); }
-    const hero = $("overview-race-background");
-    if (hero) { hero.style.background = "linear-gradient(90deg,rgba(10,5,18,.88),rgba(10,5,18,.36)),linear-gradient(135deg,#32105c,#071f2c)"; }
-    const video = document.createElement("video");
-    video.controls = true;
-    video.playsInline = true;
-    video.src = currentGameUrl;
-    const holder = $("video-placeholder");
-    holder.replaceChildren(video);
-  });
+  async function scanVideoInputs() {
+    const select = $("capture-input-select");
+    const status = $("input-status");
+    if (!navigator.mediaDevices?.enumerateDevices) {
+      status.textContent = "This browser does not support listing video inputs. Try an up-to-date browser on HTTPS.";
+      return;
+    }
+    try {
+      // Requesting permission makes device labels available where the browser supports it.
+      let temporaryStream = null;
+      if (navigator.mediaDevices.getUserMedia) {
+        try { temporaryStream = await navigator.mediaDevices.getUserMedia({video:true,audio:false}); }
+        catch { /* Enumeration may still work without permission, but labels can be hidden. */ }
+      }
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoInputs = devices.filter(device => device.kind === "videoinput");
+      select.replaceChildren(new Option("Select a connected video input…", ""));
+      videoInputs.forEach((device, index) => select.add(new Option(device.label || `Video input ${index + 1}`, device.deviceId)));
+      if (temporaryStream) temporaryStream.getTracks().forEach(track => track.stop());
+      status.textContent = videoInputs.length
+        ? `${videoInputs.length} usable video input${videoInputs.length === 1 ? "" : "s"} found. Select your capture card, then connect it.`
+        : "No usable video inputs were found. Check the capture card, USB connection and permissions, then refresh the list.";
+    } catch (error) {
+      status.textContent = "Could not scan video inputs. Check browser permissions and try again.";
+    }
+  }
+  async function connectVideoInput() {
+    const deviceId = $("capture-input-select").value;
+    const status = $("input-status");
+    if (!deviceId) { status.textContent = "Choose an input first. Select ‘Choose input / Refresh list’ to scan connected devices."; return; }
+    if (!navigator.mediaDevices?.getUserMedia) {
+      status.textContent = "Video capture is not supported by this browser. Use an up-to-date browser on HTTPS.";
+      return;
+    }
+    try {
+      if (currentInputStream) currentInputStream.getTracks().forEach(track => track.stop());
+      currentInputStream = await navigator.mediaDevices.getUserMedia({video:{deviceId:{exact:deviceId}},audio:false});
+      const video = document.createElement("video");
+      video.autoplay = true; video.muted = true; video.playsInline = true; video.srcObject = currentInputStream;
+      const holder = $("video-placeholder");
+      holder.replaceChildren(video);
+      status.textContent = "Capture input connected. The feed is visible, but race data will not be extracted until the vision AI is integrated.";
+      $("data-source-note").textContent = "Capture feed connected; waiting for the race-vision AI to interpret the on-screen data.";
+      addEvent("Capture input connected", $("capture-input-select").selectedOptions[0]?.textContent || "Video input connected");
+    } catch (error) {
+      status.textContent = "Could not connect to that input. Check permissions and make sure another app is not using the device.";
+    }
+  }
+  $("scan-inputs").addEventListener("click", scanVideoInputs);
+  $("connect-input").addEventListener("click", connectVideoInput);
   window.addEventListener("beforeunload",() => {
     if (currentGameUrl) URL.revokeObjectURL(currentGameUrl);
+    if (currentInputStream) currentInputStream.getTracks().forEach(track => track.stop());
   });
 
 })();
