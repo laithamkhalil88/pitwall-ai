@@ -338,6 +338,71 @@ h3 { font-size:13px; }
   .radio-form button { padding-inline:13px; }
 }
 
+
+/* Fixed, driving-first race engineer console */
+html.engineer-active, body.engineer-active { height:100%; overflow:hidden; }
+body.engineer-active #app { height:100dvh; min-height:0; overflow:hidden; display:flex; flex-direction:column; }
+body.engineer-active .topbar { flex:0 0 auto; min-height:60px; padding:8px 18px; }
+body.engineer-active .shell { flex:1 1 auto; min-height:0; overflow:hidden; grid-template-columns:170px minmax(0,1fr); }
+body.engineer-active .sidebar { overflow-y:auto; padding:12px 10px; }
+body.engineer-active main { max-width:none; min-height:0; height:100%; overflow:hidden; padding:12px 16px; }
+#page-engineer:not(.hidden) { height:100%; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+#page-engineer .engineer-heading { flex:0 0 auto; align-items:center; margin:0 0 10px; }
+#page-engineer .engineer-heading h1 { font-size:22px; margin:3px 0 0; }
+.engineer-console { display:grid; grid-template-columns:minmax(210px,.72fr) minmax(0,1.8fr); gap:12px; flex:1 1 auto; min-height:0; overflow:hidden; }
+.race-monitor { min-height:0; overflow-y:auto; padding:14px; }
+.monitor-heading,.radio-topline { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.monitor-heading h2,.radio-topline h2 { margin:5px 0; }
+.condition-tile { border:1px solid var(--border); background:#0c0912; border-radius:10px; padding:12px; margin-top:10px; }
+.condition-tile .value { font-size:clamp(21px,2.2vw,30px); font-weight:900; margin-top:8px; letter-spacing:.02em; }
+.condition-tile p { margin:6px 0 0; }
+.monitor-note { color:var(--muted); font-size:11px; line-height:1.45; padding:10px 0; }
+.race-monitor .video-placeholder { aspect-ratio:16/10; margin:4px 0 10px; }
+.race-monitor #game-video { font-size:11px; padding:8px; }
+.legacy-controls { display:none!important; }
+.engineer-chat { min-height:0; height:100%; overflow:hidden; padding:15px; display:flex; flex-direction:column; }
+.radio-topline { flex:0 0 auto; }
+.mic-state { font-size:10px; font-weight:900; letter-spacing:.1em; border:1px solid var(--border); padding:7px 9px; border-radius:7px; color:var(--muted); white-space:nowrap; }
+.mic-state.on { color:var(--yellow); border-color:var(--yellow); }
+.engineer-chat .radio-messages { flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; padding:8px 5px 8px 0; margin:4px 0 10px; }
+.engineer-chat .message { font-size:clamp(13px,1.1vw,16px); padding:13px 15px; margin-bottom:10px; }
+.voice-controls { display:flex; flex-wrap:wrap; gap:8px; flex:0 0 auto; }
+.voice-controls button { min-height:42px; }
+.voice-hint { color:var(--muted); font-size:11px; line-height:1.4; margin:8px 0; flex:0 0 auto; }
+.engineer-chat .radio-form { flex:0 0 auto; }
+.radio-disclaimer { margin:8px 0 0; line-height:1.4; flex:0 0 auto; }
+@media(max-width:850px) {
+ body.engineer-active .shell { grid-template-columns:1fr; grid-template-rows:auto minmax(0,1fr); }
+ body.engineer-active .sidebar { overflow-x:auto; overflow-y:hidden; padding:6px; border-right:0; border-bottom:1px solid var(--border); }
+ body.engineer-active main { padding:8px; }
+ .engineer-console { grid-template-columns:minmax(150px,.7fr) minmax(0,1.5fr); gap:8px; }
+ .race-monitor,.engineer-chat { padding:10px; }
+}
+@media(max-width:580px) {
+ body.engineer-active .topbar { min-height:50px; padding:6px 9px; }
+ body.engineer-active .topbar .brand-name { font-size:14px; }
+ body.engineer-active .topbar .brand-mark { padding:7px; }
+ body.engineer-active .top-actions button { padding:7px; font-size:10px; }
+ body.engineer-active .shell { grid-template-rows:auto minmax(0,1fr); }
+ .engineer-console { grid-template-columns:minmax(105px,.62fr) minmax(0,1.5fr); gap:6px; }
+ #page-engineer .engineer-heading h1 { font-size:17px; }
+ #page-engineer .engineer-heading .tag { max-width:135px; font-size:8px; }
+ .condition-tile { padding:8px; }
+ .condition-tile .value { font-size:18px; }
+ .condition-tile .label { font-size:9px; }
+ .condition-tile p,.monitor-note,.race-monitor .small { font-size:9px; }
+ .engineer-chat { padding:8px; }
+ .radio-topline h2 { font-size:15px; }
+ .radio-topline p { font-size:10px; }
+ .mic-state { padding:6px; font-size:8px; }
+ .voice-controls { gap:5px; }
+ .voice-controls button { padding:8px; font-size:10px; min-height:36px; }
+ .voice-hint,.radio-disclaimer { font-size:9px; }
+ .radio-form { gap:5px; }
+ .radio-form input { padding:9px; font-size:11px; }
+ .radio-form button { padding:8px; font-size:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -462,75 +527,36 @@ h3 { font-size:13px; }
       </section>
 
       <section class="page hidden" id="page-engineer">
-        <div class="page-heading"><div><div class="eyebrow">TEAM RADIO / RACE CONTROL</div><h1 id="workspace-title">New race session</h1><p class="muted">Short, tactical calls. You stay focused on driving.</p></div><span class="tag">PROTOTYPE</span></div>
-        <div class="workspace-grid">
-          <div>
-            <div class="card" style="margin-bottom:16px">
-              <div class="page-heading"><div><h2>Gameplay feed</h2><span class="live-dot">● VIDEO PREVIEW</span></div><span class="small muted">Local device / capture input</span></div>
-              <div class="video-placeholder" id="video-placeholder">
-                <div class="empty-video"><div style="font-size:36px;margin-bottom:12px">▣</div><strong>No video connected</strong><p class="small">Choose a video file below to preview it.<br>Capture-card integration is not yet implemented.</p></div>
-              </div>
-              <input type="file" id="game-video" accept="video/*">
-              <div class="small muted" style="margin-top:7px">For testing only. This video is not analysed by AI.</div>
+        <div class="page-heading engineer-heading"><div><div class="eyebrow">LIVE TEAM RADIO</div><h1 id="workspace-title">New race session</h1></div><span class="tag">SCREEN ANALYSIS NOT CONNECTED</span></div>
+        <div class="engineer-console">
+          <aside class="race-monitor card">
+            <div class="monitor-heading"><div><div class="eyebrow">RACE MONITOR</div><h2>Live conditions</h2></div><span class="live-dot">● LIVE</span></div>
+            <div class="condition-tile"><div class="label">FLAG CONDITION</div><div class="value" id="flag-display">NOT DETECTED</div><p class="small muted">Waiting for game-screen analysis</p></div>
+            <div class="condition-tile"><div class="label">TIME LEFT</div><div class="value" id="time-display">—:—</div><p class="small muted">Waiting for game-screen analysis</p></div>
+            <div class="monitor-note">The Xbox game feed is not connected yet. This monitor will only show detected values once screen analysis is integrated.</div>
+            <div class="video-placeholder" id="video-placeholder"><div class="empty-video"><div style="font-size:30px;margin-bottom:8px">▣</div><strong>No game feed connected</strong><p class="small">Capture-card support is not yet implemented.</p></div></div>
+            <input type="file" id="game-video" accept="video/*">
+            <div class="small muted" style="margin-top:7px">Uploaded video is preview-only and is not analysed.</div>
+            <!-- Legacy fields retained for the current prototype's existing session logic. -->
+            <div class="legacy-controls" aria-hidden="true">
+              <select id="flag-select"><option>Green</option><option>Yellow</option><option>Double yellow</option><option>Red</option><option>Blue</option><option>Chequered</option></select>
+              <input id="position-input" type="number" value="" />
+              <input id="minutes-input" type="number" value="20" /><input id="seconds-input" type="number" value="0" />
+              <button id="update-status" type="button">Update</button>
+              <input id="fuel-input" type="number" /><input id="fuel-lap-input" type="number" /><input id="laps-input" type="number" />
+              <button id="calculate-fuel" type="button">Calculate</button><div id="fuel-result"></div>
+              <form id="event-form"><select id="event-type"><option>Other</option></select><input id="event-notes" /><button type="submit">Log</button></form><div id="event-list"></div>
+              <button id="save-session" type="button">Save session changes</button>
             </div>
-
-            <div class="card" style="margin-bottom:16px">
-              <h2>Race status</h2>
-              <div class="telemetry-grid">
-                <div class="telemetry"><div class="label">FLAG STATUS</div><div class="value" id="flag-display">GREEN</div></div>
-                <div class="telemetry"><div class="label">TIME LEFT</div><div class="value" id="time-display">20:00</div></div>
-                <div class="telemetry"><div class="label">POSITION</div><div class="value" id="position-display">—</div></div>
-              </div>
-              <div class="two-fields">
-                <div class="field"><label for="flag-select">FLAG (MANUAL)</label><select id="flag-select"><option>Green</option><option>Yellow</option><option>Double yellow</option><option>Red</option><option>Blue</option><option>Chequered</option></select></div>
-                <div class="field"><label for="position-input">YOUR POSITION</label><input id="position-input" type="number" min="1" max="99" placeholder="e.g. 8"></div>
-              </div>
-              <div class="two-fields">
-                <div class="field"><label for="minutes-input">RACE TIME LEFT (MIN)</label><input id="minutes-input" type="number" min="0" max="999" value="20"></div>
-                <div class="field"><label for="seconds-input">SECONDS</label><input id="seconds-input" type="number" min="0" max="59" value="0"></div>
-              </div>
-              <button class="primary" id="update-status">Update race status</button>
-            </div>
-
-            <div class="card">
-              <h2>Fuel strategy</h2>
-              <p class="small muted">Enter your readings for a basic estimate. It cannot read ACC telemetry automatically.</p>
-              <div class="two-fields">
-                <div class="field"><label for="fuel-input">FUEL REMAINING (L)</label><input id="fuel-input" type="number" min="0" step="0.1" placeholder="e.g. 32"></div>
-                <div class="field"><label for="fuel-lap-input">FUEL PER LAP (L)</label><input id="fuel-lap-input" type="number" min="0.01" step="0.01" placeholder="e.g. 2.8"></div>
-              </div>
-              <div class="field"><label for="laps-input">LAPS REMAINING (OPTIONAL)</label><input id="laps-input" type="number" min="0" step="1" placeholder="Enter if known"></div>
-              <button class="secondary" id="calculate-fuel">Calculate fuel strategy</button>
-              <div id="fuel-result" class="message engineer" style="margin-top:13px">Enter fuel data to calculate a basic estimate.</div>
-            </div>
-          </div>
-
-          <div>
-            <div class="card radio-box" style="margin-bottom:16px">
-              <div class="page-heading"><div><h2>Team radio</h2><p class="small muted">Concise engineer communication</p></div><span class="tag">LOCAL</span></div>
-              <div class="radio-messages" id="radio-messages" aria-live="polite">
-                <div class="message engineer"><span class="sender">PITWALL ENGINEER</span>Radio check. Enter your race situation, driver.</div>
-              </div>
-              <form class="radio-form" id="radio-form"><input id="radio-input" maxlength="400" placeholder="e.g. tyres are sliding..." required><button class="primary" type="submit">Send</button></form>
-              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-                <button class="secondary" id="speak-last">🔊 Speak last call</button>
-                <button class="secondary" id="stop-speech">■ Stop voice</button>
-              </div>
-              <p class="footer-note">Voice uses your browser's built-in speech synthesis, if supported. Replies currently use simple local rules, not a connected AI model.</p>
-            </div>
-
-            <div class="card">
-              <div class="page-heading"><div><h2>Race event log</h2><p class="small muted">Record moments to review later.</p></div></div>
-              <form id="event-form">
-                <div class="field"><label for="event-type">EVENT TYPE</label><select id="event-type"><option>Race start</option><option>Overtake</option><option>Defence</option><option>Lock-up</option><option>Off track</option><option>Yellow flag</option><option>Pit stop</option><option>Tyre issue</option><option>Fuel update</option><option>Other</option></select></div>
-                <div class="field"><label for="event-notes">NOTES (OPTIONAL)</label><input id="event-notes" maxlength="180" placeholder="e.g. passed car into Turn 1"></div>
-                <button class="secondary" type="submit">+ Log event</button>
-              </form>
-              <div class="event-list" id="event-list" style="margin-top:15px"></div>
-            </div>
-            <button class="secondary" id="save-session" style="width:100%;margin-top:14px">Save session changes</button>
-            <p class="footer-note">Session data is stored in this browser when available. Clearing browser data or using a different device may remove or hide saved sessions.</p>
-          </div>
+          </aside>
+          <section class="radio-box card engineer-chat">
+            <div class="radio-topline"><div><div class="eyebrow">PITWALL ENGINEER</div><h2>Team radio</h2><p class="small muted">Talk naturally. No push-to-talk required.</p></div><div class="mic-state" id="mic-state">MIC OFF</div></div>
+            <div class="radio-messages" id="radio-messages" aria-live="polite"><div class="message engineer"><span class="sender">PITWALL ENGINEER</span>Radio check. Enable your microphone when you're ready to talk.</div></div>
+            <div class="voice-controls"><button class="primary" id="mic-toggle" type="button">Enable microphone</button><button class="secondary" id="stop-speech" type="button">Mute engineer voice</button><button class="secondary" id="speak-last" type="button">Repeat last call</button></div>
+            <p class="voice-hint" id="voice-hint">Microphone stays on until you mute it or leave this screen. Your browser may ask for microphone permission.</p>
+            <form class="radio-form" id="radio-form"><input id="radio-input" maxlength="400" placeholder="Or type a message to your engineer…" required><button class="primary" type="submit">Send</button></form>
+            <p class="small muted radio-disclaimer">Voice recognition depends on browser support. Engineer replies still use the prototype's local rules; a connected AI model and live screen analysis are not implemented yet.</p>
+          </section>
         </div>
       </section>
     </main>
@@ -591,6 +617,9 @@ h3 { font-size:13px; }
     return new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
   }
   function page(name) {
+    document.documentElement.classList.toggle("engineer-active", name === "engineer");
+    document.body.classList.toggle("engineer-active", name === "engineer");
+    if (name !== "engineer" && micEnabled) stopListening();
     document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
     $("page-" + name).classList.remove("hidden");
     document.querySelectorAll(".nav-button").forEach(btn =>
@@ -724,6 +753,10 @@ h3 { font-size:13px; }
     });
   }
   function renderStatus() {
+    $("flag-display").textContent = "NOT DETECTED";
+    $("time-display").textContent = "—:—";
+    return;
+    /* Manual prototype status renderer retained below for future screen-analysis integration. */
     const s = activeSession();
     if (!s) return;
     $("flag-display").textContent = (s.flag || "Green").toUpperCase();
@@ -1085,6 +1118,80 @@ h3 { font-size:13px; }
     saveMessage("PITWALL ENGINEER",reply);
   });
   $("calculate-fuel").addEventListener("click",() => calculateFuel(true));
+
+  // Continuous open-mic speech recognition where the browser supports it.
+  let recognition = null;
+  let micEnabled = false;
+  let engineerVoiceMuted = false;
+  let recognitionRestartRequested = false;
+  const micToggle = $("mic-toggle");
+  const micState = $("mic-state");
+  const voiceHint = $("voice-hint");
+  const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+  function setMicUi(on, message) {
+    micEnabled = on;
+    micState.textContent = on ? "MIC ON" : "MIC MUTED";
+    micState.classList.toggle("on", on);
+    micToggle.textContent = on ? "Mute microphone" : "Enable microphone";
+    if (message) voiceHint.textContent = message;
+  }
+  function startListening() {
+    if (!SpeechRecognitionAPI) {
+      setMicUi(false, "This browser does not support built-in speech recognition. You can still type in the radio box.");
+      return;
+    }
+    if (!recognition) {
+      recognition = new SpeechRecognitionAPI();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = "en-GB";
+      let lastFinal = "";
+      recognition.onresult = event => {
+        let finalText = "";
+        let interimText = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const phrase = event.results[i][0].transcript.trim();
+          if (event.results[i].isFinal) finalText += (finalText ? " " : "") + phrase;
+          else interimText += phrase;
+        }
+        if (interimText) voiceHint.textContent = "Listening… “" + interimText + "”";
+        if (finalText && finalText !== lastFinal) {
+          lastFinal = finalText;
+          sendRadio(finalText);
+          voiceHint.textContent = "Microphone is on. Keep talking naturally; select Mute microphone whenever you want.";
+        }
+      };
+      recognition.onerror = event => {
+        if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+          recognitionRestartRequested = false;
+          setMicUi(false, "Microphone permission was blocked. Allow microphone access in the browser address bar, then try again.");
+        } else if (event.error !== "no-speech" && event.error !== "aborted") {
+          voiceHint.textContent = "Voice recognition paused (" + event.error + "). You can keep using text chat or try the mic again.";
+        }
+      };
+      recognition.onend = () => {
+        if (micEnabled && recognitionRestartRequested) {
+          try { recognition.start(); } catch (_) {}
+        }
+      };
+    }
+    recognitionRestartRequested = true;
+    setMicUi(true, "Microphone is on. Talk naturally; it stays on until you mute it or leave this screen.");
+    try { recognition.start(); } catch (_) { voiceHint.textContent = "Starting microphone… If it does not connect, mute and enable it again."; }
+  }
+  function stopListening() {
+    recognitionRestartRequested = false;
+    setMicUi(false, "Microphone muted. Enable it again whenever you're ready to talk.");
+    if (recognition) { try { recognition.stop(); } catch (_) {} }
+  }
+  micToggle.addEventListener("click", () => micEnabled ? stopListening() : startListening());
+  $("stop-speech").textContent = "Mute engineer voice";
+  $("stop-speech").addEventListener("click", () => {
+    engineerVoiceMuted = !engineerVoiceMuted;
+    if (engineerVoiceMuted) window.speechSynthesis?.cancel();
+    $("stop-speech").textContent = engineerVoiceMuted ? "Unmute engineer voice" : "Mute engineer voice";
+  });
+
   $("radio-form").addEventListener("submit",event => {
     event.preventDefault();
     const input = $("radio-input");
