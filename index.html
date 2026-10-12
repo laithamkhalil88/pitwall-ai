@@ -156,6 +156,188 @@ h3 { font-size:14px; }
   .telemetry-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .two-fields { grid-template-columns:1fr; gap:0; }
 }
+
+/* PITWALL AI shell refresh */
+:root {
+  --bg:#090610;
+  --panel:#13101c;
+  --panel2:#1c1628;
+  --purple:#22015b;
+  --turquoise:#43f5df;
+  --yellow:#d7ff3f;
+  --muted:#a7a0b7;
+  --border:#30253f;
+  --white:#f8f7fc;
+  --danger:#ff7488;
+}
+html { scroll-behavior:smooth; }
+body {
+  background:
+    radial-gradient(ellipse at 70% -10%, rgba(70,27,119,.26), transparent 48%),
+    radial-gradient(ellipse at 0% 50%, rgba(34,1,91,.12), transparent 38%),
+    var(--bg);
+  color:var(--white);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  letter-spacing:.005em;
+}
+button,input,select,textarea { font:inherit; }
+button { transition:transform .16s ease,border-color .16s ease,background .16s ease,opacity .16s ease; }
+button:not(:disabled):hover { transform:translateY(-1px); }
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
+  outline:2px solid var(--yellow); outline-offset:3px;
+}
+.primary {
+  background:var(--yellow); color:#151020; border:1px solid var(--yellow);
+  border-radius:9px; padding:12px 16px; font-weight:850; box-shadow:0 5px 20px rgba(215,255,63,.08);
+}
+.primary:hover { background:#e5ff75; }
+.secondary {
+  background:#171221; color:var(--white); border:1px solid #3b304c;
+  border-radius:9px; padding:10px 13px;
+}
+.secondary:hover { border-color:#76618e; background:#21182e; }
+.card {
+  background:linear-gradient(145deg,rgba(26,21,37,.96),rgba(17,13,26,.98));
+  border:1px solid var(--border); border-radius:15px; padding:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.12);
+}
+input,select,textarea {
+  background:#0c0912; border:1px solid #3a2d4b; border-radius:9px;
+  color:var(--white); padding:13px 14px; transition:border-color .15s ease,box-shadow .15s ease;
+}
+input::placeholder,textarea::placeholder { color:#726a80; }
+input:focus,select:focus,textarea:focus { border-color:var(--turquoise); box-shadow:0 0 0 3px rgba(67,245,223,.08); }
+label { color:#b7b0c7; font-size:11px; font-weight:750; letter-spacing:.09em; }
+.eyebrow { color:var(--turquoise); font-size:10px; font-weight:850; letter-spacing:.19em; }
+.brand { gap:12px; }
+.brand-mark {
+  min-width:43px; min-height:43px; display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--yellow),#9ebd28); color:#100b18;
+  border-radius:12px; padding:8px; font-size:14px; font-weight:1000;
+  box-shadow:0 0 25px rgba(215,255,63,.08);
+}
+.brand-name { font-size:19px; font-weight:950; letter-spacing:.075em; }
+.brand-name span { color:var(--yellow); }
+#login,#verify-email {
+  min-height:100vh; display:grid; place-items:center; padding:24px;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(73,35,122,.34),transparent 58%),
+    linear-gradient(135deg,#090610,#10091a 60%,#0b0711);
+}
+.login-card { width:min(440px,100%); }
+.login-card .brand { justify-content:center; margin-bottom:32px; }
+.login-card h1 { font-size:clamp(27px,4vw,34px); line-height:1.12; letter-spacing:-.04em; margin:18px 0 10px; }
+.login-card p { line-height:1.65; }
+.login-card .card { margin-top:24px; padding:22px; background:rgba(20,15,29,.9); }
+.topbar {
+  min-height:76px; display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding:13px 27px; border-bottom:1px solid rgba(73,57,91,.7);
+  background:rgba(12,8,19,.9); backdrop-filter:blur(18px);
+  position:sticky; top:0; z-index:5;
+}
+.top-actions { gap:10px; }
+.shell { display:grid; grid-template-columns:238px minmax(0,1fr); min-height:calc(100vh - 76px); }
+.sidebar {
+  padding:25px 15px; border-right:1px solid rgba(73,57,91,.65);
+  background:rgba(12,8,19,.66); display:flex; flex-direction:column;
+}
+.nav-button {
+  display:flex; align-items:center; width:100%; text-align:left; padding:13px 14px; margin-bottom:7px;
+  border:1px solid transparent; border-radius:10px; background:transparent;
+  color:#a9a2b8; font-size:13px; font-weight:650;
+}
+.nav-button:hover { background:#171120; color:var(--white); }
+.nav-button.active {
+  color:var(--yellow); background:linear-gradient(90deg,rgba(215,255,63,.11),rgba(67,245,223,.025));
+  border-color:rgba(215,255,63,.18); box-shadow:inset 3px 0 0 var(--yellow);
+}
+.sidebar-bottom { margin-top:auto; padding:18px 12px 8px; border-top:1px solid var(--border); }
+main { padding:30px clamp(16px,3vw,38px); min-width:0; max-width:1700px; width:100%; margin:0 auto; }
+.page-heading { align-items:center; margin-bottom:24px; }
+h1 { font-size:clamp(26px,3vw,36px); letter-spacing:-.045em; line-height:1.1; }
+h2 { font-size:17px; letter-spacing:-.015em; }
+h3 { font-size:13px; }
+.page-heading p { margin-bottom:0; }
+.stats-grid { gap:14px; margin-bottom:22px; }
+.stat-value { font-size:30px; letter-spacing:-.04em; }
+.stats-grid .card { position:relative; overflow:hidden; }
+.stats-grid .card:after {
+  content:""; position:absolute; right:-26px; top:-35px; width:100px; height:100px;
+  border:1px solid rgba(67,245,223,.09); border-radius:50%; pointer-events:none;
+}
+.stats-grid .card:nth-child(2) .stat-value { color:var(--turquoise); }
+.stats-grid .card:nth-child(3) .stat-value { color:var(--yellow); }
+.stats-grid .card:nth-child(4) .stat-value { color:#c5a6ff; }
+.dashboard-grid { gap:18px; }
+.session-row { padding:16px 0; border-bottom-color:#2b2238; }
+.session-row strong { font-size:13px; }
+.tag { background:rgba(67,245,223,.08); color:var(--turquoise); border:1px solid rgba(67,245,223,.16); border-radius:6px; }
+.empty { padding:30px 12px; }
+.clip-art {
+  background:
+    radial-gradient(circle at 50% 0%,rgba(91,39,151,.4),transparent 55%),
+    linear-gradient(135deg,#211332,#0d0914);
+  border:1px solid #3b2b50; color:var(--yellow);
+}
+.clip-art span { text-shadow:0 0 28px rgba(215,255,63,.16); }
+.workspace-grid { gap:18px; }
+.video-placeholder { border-color:#40324f; background:#050408; border-radius:11px; }
+.telemetry { background:#0d0914; border-color:#30253f; border-radius:10px; }
+.telemetry .value { letter-spacing:-.04em; }
+.telemetry .label { font-weight:800; }
+.event { border-bottom-color:#2b2238; }
+.event time { color:var(--yellow); font-variant-numeric:tabular-nums; }
+.radio-box { min-height:420px; }
+.message { background:#20172c; border-radius:9px; }
+.message.engineer { border-left:3px solid var(--turquoise); }
+.message.user { border-left:3px solid #9a7cff; }
+.message .sender { color:var(--turquoise); }
+.note { border-color:#5b512b; background:#211c13; }
+.footer-note { color:#8d859c; }
+#auth-message { overflow-wrap:anywhere; }
+.verify-mark {
+  width:66px;height:66px;margin:0 auto 20px;border-radius:20px;
+  display:grid;place-items:center;background:rgba(67,245,223,.1);
+  border:1px solid rgba(67,245,223,.24);color:var(--turquoise);font-size:30px;
+}
+#verify-email .login-card { text-align:center; }
+#verify-email .card { text-align:left; }
+@media(max-width:1000px) {
+  .shell { grid-template-columns:205px minmax(0,1fr); }
+  main { padding:24px 18px; }
+  .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dashboard-grid,.workspace-grid { grid-template-columns:1fr; }
+  .clip-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:680px) {
+  .topbar { padding:12px 14px; position:relative; align-items:flex-start; }
+  .brand-name { font-size:16px; }
+  .brand-mark { min-width:38px; min-height:38px; }
+  .top-actions { justify-content:flex-end; gap:6px; }
+  .top-actions .small { display:none; }
+  .top-actions button { padding:9px 10px; font-size:12px; }
+  .shell { grid-template-columns:1fr; }
+  .sidebar {
+    position:sticky; top:0; z-index:4; border-right:0; border-bottom:1px solid var(--border);
+    padding:8px; display:flex; flex-direction:row; gap:5px; overflow-x:auto;
+    background:rgba(12,8,19,.96); backdrop-filter:blur(16px);
+  }
+  .nav-button { flex:0 0 auto; white-space:nowrap; width:auto; margin:0; padding:10px 12px; font-size:12px; }
+  .nav-button.active { box-shadow:inset 0 -2px 0 var(--yellow); }
+  .sidebar-bottom { display:none; }
+  main { padding:21px 12px 30px; }
+  .page-heading { align-items:flex-start; flex-direction:column; gap:12px; }
+  .page-heading .primary,.page-heading .secondary { max-width:100%; }
+  .stats-grid { gap:9px; }
+  .stat-value { font-size:25px; }
+  .card { padding:15px; border-radius:12px; }
+  .clip-grid { grid-template-columns:1fr; }
+  .telemetry-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .two-fields { grid-template-columns:1fr; gap:0; }
+  .radio-form { align-items:stretch; }
+  .radio-form button { padding-inline:13px; }
+}
+
 </style>
 </head>
 <body>
@@ -191,6 +373,28 @@ h3 { font-size:14px; }
       </div>
       <p class="small muted" style="margin:13px 0 0">Create an account with your email and verify it before signing in. Use a unique password.</p>
     </form>
+  </div>
+</section>
+
+
+<section id="verify-email" class="hidden">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-mark">PW</div>
+      <div class="brand-name">PITWALL <span>AI</span></div>
+    </div>
+    <div class="verify-mark" aria-hidden="true">✉</div>
+    <div class="eyebrow">ONE LAST STEP</div>
+    <h1>Verify your email.</h1>
+    <p class="muted">We've sent a verification email to the address below. Open the email and click its verification link to activate your PITWALL AI account.</p>
+    <div class="card">
+      <div class="small muted" style="margin-bottom:7px">VERIFICATION EMAIL</div>
+      <strong id="verification-email-address" style="overflow-wrap:anywhere"></strong>
+      <p class="small muted" style="margin:16px 0 0">Can't find it? Check your spam or junk folder. It may take a few minutes to arrive.</p>
+      <button class="primary" id="resend-verification" type="button" style="width:100%;margin-top:18px">Resend verification email</button>
+      <button class="secondary" id="back-to-sign-in" type="button" style="width:100%;margin-top:9px">Back to sign in</button>
+      <div id="verification-message" class="small muted" role="status" aria-live="polite" style="margin-top:13px;line-height:1.5"></div>
+    </div>
   </div>
 </section>
 
@@ -348,6 +552,7 @@ h3 { font-size:14px; }
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
     : null;
   let currentUser = null;
+  let pendingVerificationEmail = "";
   let STORAGE_KEY = "pitwall-ai-sessions-v1";
   let PROFILE_KEY = "pitwall-ai-driver-v1";
   let sessions = [];
@@ -652,7 +857,18 @@ h3 { font-size:14px; }
 
   function showLogin() {
     $("app").classList.add("hidden");
+    $("verify-email").classList.add("hidden");
     $("login").classList.remove("hidden");
+  }
+
+  function showVerificationScreen(email) {
+    pendingVerificationEmail = email;
+    $("verification-email-address").textContent = email;
+    $("verification-message").textContent = "";
+    $("login").classList.add("hidden");
+    $("app").classList.add("hidden");
+    $("verify-email").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"smooth"});
   }
 
   function showAppForUser(user) {
@@ -668,6 +884,7 @@ h3 { font-size:14px; }
       (user.email ? user.email.split("@")[0] : "Driver");
     $("welcome-name").textContent = displayName;
     $("login").classList.add("hidden");
+    $("verify-email").classList.add("hidden");
     $("app").classList.remove("hidden");
     renderDashboard();
     renderSessions();
@@ -735,13 +952,44 @@ h3 { font-size:14px; }
       if (data.session && data.user) {
         showAppForUser(data.user);
       } else {
-        showAuthMessage("Registration started. Check your inbox for the verification link before signing in.");
+        showVerificationScreen(email);
       }
     } catch (error) {
       showAuthMessage(friendlyAuthError(error), true);
     } finally {
       $("sign-in-button").disabled = false;
       $("sign-up-button").disabled = false;
+    }
+  });
+
+  $("back-to-sign-in").addEventListener("click", () => {
+    $("verify-email").classList.add("hidden");
+    $("login").classList.remove("hidden");
+    $("account-email").value = pendingVerificationEmail;
+    $("account-password").value = "";
+    showAuthMessage("Verify your email before signing in. Check your inbox and spam/junk folder.");
+  });
+
+  $("resend-verification").addEventListener("click", async () => {
+    if (!supabaseClient || !pendingVerificationEmail) {
+      $("verification-message").textContent = "Enter your email on the sign-in screen and try creating your account again.";
+      return;
+    }
+    const button = $("resend-verification");
+    button.disabled = true;
+    $("verification-message").textContent = "Sending verification email…";
+    try {
+      const { error } = await supabaseClient.auth.resend({
+        type: "signup",
+        email: pendingVerificationEmail,
+        options: { emailRedirectTo: window.location.origin + window.location.pathname }
+      });
+      if (error) throw error;
+      $("verification-message").textContent = "If this address has a pending signup, a new verification email has been requested. Check your inbox and spam/junk folder.";
+    } catch (error) {
+      $("verification-message").textContent = friendlyAuthError(error);
+    } finally {
+      button.disabled = false;
     }
   });
 
